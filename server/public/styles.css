@@ -1,0 +1,43 @@
+.color-blue {
+  background-color: #021920;
+}
+
+.color-lightblue {
+  color: #bfecf2 !important;
+}
+
+.color-main-blue {
+  background-color: #04252e;
+}
+
+.color-text-white {
+  color: white;
+}
+
+.spacer-line {
+  border: 1px solid gray;
+}
+
+.font-lig {
+  font-family: Inconsolata, monospace;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.margin-bottom {
+  margin-bottom: 2rem;
+}
+
+.margin-left {
+  margin-left: 2rem;
+}
+
+.border-radius-small {
+  border-radius: 0.2rem;
+}
+
+.font-size-large {
+  font-size: 1.75rem;
+}
