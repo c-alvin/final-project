@@ -29,7 +29,6 @@ export default class NavbarComp extends React.Component {
       .then(res => res.json())
       .then(result => {
         this.props.search(result);
-        // console.log(result);
       });
   }
 
