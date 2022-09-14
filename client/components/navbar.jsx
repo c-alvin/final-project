@@ -34,18 +34,19 @@ export default class NavbarComp extends React.Component {
   }
 
   handleSubmitTest(event) {
-    window.location.hash = 'search';
+    event.preventDefault();
+    window.location.hash = `search?term=${this.state.search}`;
   }
 
   render() {
     return (
       <Navbar className="color-blue" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand className="color-lightblue" href="#home">mist</Navbar.Brand>
+          <Navbar.Brand className="color-lightblue" href="#">mist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" />
-            <Form className="d-flex" onSubmit= {this.handleSubmit}>
+            <Form className="d-flex" onSubmit= {this.handleSubmitTest}>
               <Form.Control onChange={this.handleChange}
                 type="search"
                 placeholder="Search"

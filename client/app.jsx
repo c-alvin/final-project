@@ -24,13 +24,16 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { path } = this.state.route;
+
+    const { route } = this.state;
+    const searchTerm = route.params.get('term');
     const { listOfGames } = this.state;
-    if (listOfGames === null) {
+    const { handleSearch } = this;
+    if (route.path === '') {
       return <Home />;
     }
-    if (path !== null) {
-      return <Search listOfGames={listOfGames}/>;
+    if (route.path === 'search') {
+      return <Search listOfGames={listOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
   }
 
@@ -41,10 +44,9 @@ export default class App extends React.Component {
 
   render() {
     // console.log(this.state);
-    const { handleSearch } = this;
     return (
     <>
-    <NavbarComp search={handleSearch} />
+    <NavbarComp />
     <PageContainer>
       { this.renderPage() }
     </PageContainer>
