@@ -37,7 +37,6 @@ export default class Search extends React.Component {
   }
 
   render() {
-    // console.log(this.props.listOfGames);
     if (this.props.listOfGames === null) {
       return null;
     }
@@ -60,7 +59,7 @@ export default class Search extends React.Component {
                       <div>
                         <span>{dateTest}</span>
                         {
-                          game.platforms.map((platform, index) => {
+                          game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];
                             const show = platformImages[platform.name] === undefined
                               ? 'hidden'
