@@ -1,6 +1,14 @@
 import React from 'react';
 import moment from 'moment';
 
+const platformImages = {
+  'Nintendo Switch': './images/nintendo.svg',
+  'PC (Microsoft Windows)': './images/pc.svg',
+  Xbox: './images/xbox.svg',
+  PlayStation: './images/ps.svg',
+  'PlayStation 4': './images/ps.svg'
+};
+
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -46,10 +54,19 @@ export default class Search extends React.Component {
             this.props.listOfGames.map(game =>
               <div className="display-flex" key={game.id}>
                 <a href="details"><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_thumb_2x/${game?.cover?.image_id}.jpg`}></img></a>
-                <div className='color-text-white font-lig margin-left'>{`${game.name}` }
+                <div className='color-text-lightblue font-lig margin-left'>{`${game.name}` }
                   <div>
                     <span>{`(${moment(game.first_release_date).format('YYYY')})`}</span>
-                    {/* <img className="platform-logo" src="./images/pc.svg"></img> */}
+                    {
+                      game.platforms.map((platform, index) => {
+                        const src = platformImages[platform.name];
+                        const show = platformImages[platform.name] === undefined
+                          ? 'hidden'
+                          : 'show';
+                        return <img className={`margin-left-small platform-logo ${show}`} key={index} src={src}></img>;
+                      }
+                      )
+                    }
                   </div>
                 </div>
               </div>
