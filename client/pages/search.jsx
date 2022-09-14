@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 
 const platformImages = {
   'Nintendo Switch': './images/nintendo.svg',
@@ -51,12 +50,15 @@ export default class Search extends React.Component {
         <div className="row">
           <div className="col">
           {
-            this.props.listOfGames.map(game =>
+            this.props.listOfGames.map(game => {
+              let dateTest = new Date(game.first_release_date * 1000);
+              dateTest = dateTest.getFullYear();
+              return (
               <div className="display-flex" key={game.id}>
                 <a href="details"><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_thumb_2x/${game?.cover?.image_id}.jpg`}></img></a>
                 <div className='color-text-lightblue font-lig margin-left'>{`${game.name}` }
                   <div>
-                    <span>{`(${moment(game.first_release_date).format('YYYY')})`}</span>
+                    <span>{dateTest}</span>
                     {
                       game.platforms.map((platform, index) => {
                         const src = platformImages[platform.name];
@@ -70,6 +72,8 @@ export default class Search extends React.Component {
                   </div>
                 </div>
               </div>
+              );
+            }
             )
           }
           </div>

@@ -17,7 +17,7 @@ app.get('/api/search', (req, res) => {
       'Client-ID': process.env.CLIENT_ID,
       Authorization: 'Bearer wb9acv3ulq4tsa3zc27zkli61edii0'
     },
-    body: `fields cover.*,first_release_date, screenshots.*, name, platforms.*; search: "${search}"; limit 10; offset 0;`
+    body: `fields cover.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}"; limit 10; offset 0;`
   })
     .then(res => res.json())
     .then(data => res.status(201).json(data))
