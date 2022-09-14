@@ -1,0 +1,75 @@
+.color-blue {
+  background-color: #021920;
+}
+
+.color-lightblue {
+  color: #bfecf2 !important;
+}
+
+.color-text-lightblue {
+  color: #bfecf2;
+}
+
+.color-main-blue {
+  background-color: #04252e;
+}
+
+.color-text-white {
+  color: white;
+}
+
+.spacer-line {
+  border: 1px solid gray;
+}
+
+.font-lig {
+  font-family: Inconsolata, monospace;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.margin-bottom {
+  margin-bottom: 2rem;
+}
+
+.margin-left {
+  margin-left: 2rem;
+}
+
+.margin-left-small {
+  margin-left: 0.2rem;
+}
+
+.border-radius-small {
+  border-radius: 0.2rem;
+}
+
+.font-size-large {
+  font-size: 1.75rem;
+}
+
+.min-height {
+  min-height: 100vh;
+}
+
+img {
+  object-fit: fill;
+}
+
+.platform-logo {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.hidden {
+  display: none;
+}
+
+/* .background-image {
+  background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/5b1089c6-bacb-4d88-8a75-3692aff4c6b1/dc68p85-ce4fdf1a-5ef0-4eb7-8e0d-8cd8d0745ea5.png/v1/fill/w_1192,h_670,q_70,strp/hyrule___legend_of_zelda__breath_of_the_wild_by_sephiroth508_dc68p85-pre.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9MjE2MCIsInBhdGgiOiJcL2ZcLzViMTA4OWM2LWJhY2ItNGQ4OC04YTc1LTM2OTJhZmY0YzZiMVwvZGM2OHA4NS1jZTRmZGYxYS01ZWYwLTRlYjctOGUwZC04Y2Q4ZDA3NDVlYTUucG5nIiwid2lkdGgiOiI8PTM4NDAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uub3BlcmF0aW9ucyJdfQ.K3Way6CnhVC2A7DPj3G-B7tfcpyuLbYnt_MwzdMGIEQ");
+  opacity: 0.75;
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
