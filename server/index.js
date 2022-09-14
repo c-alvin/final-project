@@ -8,20 +8,20 @@ const app = express();
 
 app.use(staticMiddleware);
 
-app.get('/api/search', (req, res) => {
+app.get('/api/search', (req, res, next) => {
   // console.log(req.query.term);
   const search = req.query.term;
   fetch('https://api.igdb.com/v4/games', {
     method: 'POST',
     headers: {
       'Client-ID': process.env.CLIENT_ID,
-      Authorization: 'Bearer wb9acv3ulq4tsa3zc27zkli61edii0'
+      Authorization: process.env.API_TOKEN
     },
     body: `fields cover.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}"; limit 10; offset 0;`
   })
     .then(res => res.json())
     .then(data => res.status(201).json(data))
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
