@@ -97,8 +97,9 @@ img {
 
 #rating {
   position: absolute;
-  bottom: 11.25rem;
+  bottom: 9.75rem;
   left: 1.5rem;
+  padding: 1rem 0.5rem;
 }
 
 body {
@@ -111,6 +112,14 @@ body {
 
 .margin-right-small {
   margin-right: 0.5rem;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
 }
 
 /* .background-image {

@@ -1,5 +1,6 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
+import Form from 'react-bootstrap/Form';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -7,6 +8,7 @@ export default class Details extends React.Component {
     this.state = {
       gameInfo: null
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -15,9 +17,22 @@ export default class Details extends React.Component {
       .then(res => res.json())
       .then(gameInfo => {
         this.setState({
-          gameInfo: gameInfo[0]
+          gameInfo: gameInfo[0],
+          isOpen: false
         });
       });
+  }
+
+  handleClick(event) {
+    if (this.state.isOpen === true) {
+      this.setState({
+        isOpen: null
+      });
+    } else {
+      this.setState({
+        isOpen: true
+      });
+    }
   }
 
   render() {
@@ -49,6 +64,10 @@ export default class Details extends React.Component {
     }
     let dateTest = new Date(this.state.gameInfo.first_release_date * 1000);
     dateTest = dateTest.getFullYear();
+
+    const revealedForm = this.state.isOpen
+      ? 'show'
+      : 'hidden';
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${screenshotId})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
@@ -59,7 +78,7 @@ export default class Details extends React.Component {
             <h4 id="game-title" className='color-text-white font-lig margin-right-small'>{`${name} (${dateTest})`}</h4>
         </div>
         <div className='col'>
-          <Badge id="rating" bg="info">{rating}</Badge>
+            <Badge id="rating" bg="info">{rating}</Badge>
         </div>
       </div>
       <div className='row'>
@@ -77,7 +96,17 @@ export default class Details extends React.Component {
           }
         </div>
         <div className='color-text-white col-md-6 font-lig'>
-          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>COMMENTS</h1>
+          <div className='display-flex space-between align-center'>
+            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>COMMENTS</h1>
+            <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
+          </div>
+          <Form className={revealedForm}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              <Form.Label>Comment Below!</Form.Label>
+              <Form.Control as="textarea" rows={3} />
+              <button type="button" className="btn btn-light">Info</button>
+            </Form.Group>
+          </Form>
         </div>
       </div>
     </div>
