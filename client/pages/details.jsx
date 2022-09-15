@@ -6,9 +6,15 @@ export default class Details extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameInfo: null
+      gameInfo: null,
+      gameId: null,
+      comment: '',
+      comments: [],
+      isOpen: false
     };
     this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -18,15 +24,43 @@ export default class Details extends React.Component {
       .then(gameInfo => {
         this.setState({
           gameInfo: gameInfo[0],
-          isOpen: false
+          gameId: this.props.gameId
         });
       });
   }
 
+  handleChange(event) {
+    const comment = event.target.value;
+    this.setState({
+      comment
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const req = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    };
+    // console.log(this.state);
+    fetch('/api/details/comment', req)
+      .then(res => res.json())
+      .then(result =>
+        this.setState({
+          comments: result,
+          comment: '',
+          isOpen: false
+        }))
+    ;
+  }
+
   handleClick(event) {
-    if (this.state.isOpen === true) {
+    if (this.state.isOpen) {
       this.setState({
-        isOpen: null
+        isOpen: false
       });
     } else {
       this.setState({
@@ -36,9 +70,17 @@ export default class Details extends React.Component {
   }
 
   render() {
+    // console.log(this.state);
     if (this.state.gameInfo === null) {
       return null;
     }
+    const renderComments = () => {
+      if (this.state.comments !== []) {
+        return <p>{this.state.comments.content}</p>;
+      } else {
+        return <p>test</p>;
+      }
+    };
     const { name } = this.state.gameInfo;
     let { image_id: screenshotId } = this.state.gameInfo.screenshots[Math.floor(Math.random() * ((this.state.gameInfo.screenshots.length - 1) - 0) + 1) + 0];
     screenshotId = `${screenshotId}.jpg`;
@@ -100,11 +142,14 @@ export default class Details extends React.Component {
             <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>COMMENTS</h1>
             <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
           </div>
-          <Form className={revealedForm}>
+          <div>
+            {renderComments()}
+          </div>
+          <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Label>Comment Below!</Form.Label>
-              <Form.Control as="textarea" rows={3} />
-              <button type="button" className="btn btn-light">Info</button>
+              <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
+              <button type="submit" className="btn btn-light">Info</button>
             </Form.Group>
           </Form>
         </div>

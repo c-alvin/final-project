@@ -3,10 +3,19 @@ const express = require('express');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const fetch = require('node-fetch');
+const pg = require('pg');
+
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 const app = express();
 
 app.use(staticMiddleware);
+app.use(express.json());
 
 app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
@@ -22,6 +31,27 @@ app.get('/api/details', (req, res, next) => {
     .then(data => res.status(200).json(data))
     .catch(err => next(err))
   ;
+});
+
+app.post('/api/details/comment', (req, res, next) => {
+  const { comment, gameId } = req.body;
+  // console.log('hi');
+  const userId = 1;
+  // if (!comment) {
+  //   throw new ClientError(400, 'Comments are required');
+  // }
+  const sql = `
+    insert into "comments" ("userId", "gameId", "content")
+    values ($1, $2, $3)
+    returning "content"
+  `;
+
+  const params = [userId, gameId, comment];
+  db.query(sql, params)
+    .then(result => {
+      const [comments] = result.rows;
+      res.status(200).json(comments);
+    }).catch(err => next(err));
 });
 
 app.get('/api/search', (req, res, next) => {
