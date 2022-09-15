@@ -1,0 +1,12 @@
+.background-size {
+  height: 375px;
+  width: 350px;
+  background-size: cover;
+}
+
+@media screen and (min-width: 400px) {
+  .background-size {
+    height: 375px;
+    width: auto;
+  }
+}

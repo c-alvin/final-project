@@ -8,6 +8,22 @@ const app = express();
 
 app.use(staticMiddleware);
 
+app.get('/api/details', (req, res, next) => {
+  const search = req.query.gameId;
+  fetch('https://api.igdb.com/v4/games', {
+    method: 'POST',
+    headers: {
+      'Client-ID': process.env.CLIENT_ID,
+      Authorization: process.env.API_TOKEN
+    },
+    body: `fields name, first_release_date, total_rating, storyline,genres.*, rating, summary, age_ratings.*, aggregated_rating, screenshots.*, tags, cover.*, videos.*; where id = ${search};`
+  })
+    .then(res => res.json())
+    .then(data => res.status(200).json(data))
+    .catch(err => next(err))
+  ;
+});
+
 app.get('/api/search', (req, res, next) => {
   const search = req.query.term;
   fetch('https://api.igdb.com/v4/games', {
@@ -16,7 +32,7 @@ app.get('/api/search', (req, res, next) => {
       'Client-ID': process.env.CLIENT_ID,
       Authorization: process.env.API_TOKEN
     },
-    body: `fields cover.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}"; limit 10; offset 0;`
+    body: `fields cover.*, storyline, age_ratings.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}";`
   })
     .then(res => res.json())
     .then(data => res.status(200).json(data))
