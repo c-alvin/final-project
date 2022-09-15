@@ -4,6 +4,7 @@ import NavbarComp from './components/navbar';
 import PageContainer from './components/page-container';
 import parseRoute from './lib/parse-route';
 import Search from './pages/search';
+import Details from './pages/details';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,23 +24,28 @@ export default class App extends React.Component {
     });
   }
 
-  renderPage() {
+  handleSearch(result) {
+    const games = result;
+    this.setState({ listOfGames: games });
+  }
 
+  renderPage() {
     const { route } = this.state;
     const searchTerm = route.params.get('term');
+    const gameId = route.params.get('gameId');
     const { listOfGames } = this.state;
     const { handleSearch } = this;
+    const { handleDetails } = this;
+    // const { game } = this.state;
     if (route.path === '') {
       return <Home />;
     }
     if (route.path === 'search') {
       return <Search listOfGames={listOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
-  }
-
-  handleSearch(result) {
-    const games = result;
-    this.setState({ listOfGames: games });
+    if (route.path === 'details') {
+      return <Details details={handleDetails} gameId={gameId} />;
+    }
   }
 
   render() {

@@ -39,7 +39,7 @@ export default class NavbarComp extends React.Component {
 
   render() {
     return (
-      <Navbar className="color-blue" expand="lg" variant="dark">
+      <Navbar fixed="top" className="color-blue" expand="lg" variant="dark">
         <Container>
           <Navbar.Brand className="color-lightblue font-size-large" href="#">mist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
