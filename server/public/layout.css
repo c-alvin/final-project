@@ -4,9 +4,31 @@
   background-size: cover;
 }
 
+.cover-game {
+  height: 200px;
+  width: 175px;
+}
+
+.video-img {
+  height: 10rem;
+  width: 10rem;
+}
+
 @media screen and (min-width: 400px) {
   .background-size {
     height: 375px;
     width: auto;
+  }
+
+  .cover-game {
+    height: auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .video-img {
+    height: 10rem;
+    width: 12.5rem;
   }
 }
