@@ -25,3 +25,10 @@
     width: auto;
   }
 }
+
+@media screen and (min-width: 992px) {
+  .video-img {
+    height: 10rem;
+    width: 12.5rem;
+  }
+}

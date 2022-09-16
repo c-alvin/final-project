@@ -53,7 +53,7 @@ export default class Details extends React.Component {
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
-        const test = this.state.comments;
+        const test = this.state.comments.slice();
         test.push(result);
         this.setState({
           comments: test,
@@ -123,7 +123,6 @@ export default class Details extends React.Component {
       <div className='row'>
         <div className='color-text-white col-md-6 font-lig'>
           <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>SUMMARY</h1>
-            {/* <img src="https://img.youtube.com/vi/L93H7YC-83o/hqdefault.jpg " alt="" /> */}
           <p className='font-inter'>{description}</p>
           {
             this.state.gameInfo[0].genres.map((genre, index) => {
