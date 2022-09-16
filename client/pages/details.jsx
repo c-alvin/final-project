@@ -54,7 +54,7 @@ export default class Details extends React.Component {
       .then(res => res.json())
       .then(result => {
         const test = this.state.comments.slice();
-        test.push(result);
+        test.push(result[1]);
         this.setState({
           comments: test,
           comment: '',
@@ -166,6 +166,17 @@ export default class Details extends React.Component {
           </div>
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+              {/* <div>
+                {
+                  [...Array(5).map((star, index) => {
+                    return (
+                      <button type="button" key={index}>
+                        <i className="fa-solid fa-star"></i>
+                      </button>
+                    );
+                  })]
+                }
+              </div> */}
               <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
             </Form.Group>

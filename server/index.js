@@ -50,19 +50,37 @@ app.get('/api/details', (req, res, next) => {
 app.post('/api/details/comment', (req, res, next) => {
   const { comment, gameId } = req.body;
   const userId = 1;
-
+  const rating = 5; // hard coded it for now until i get the stars to work
   const sql = `
     insert into "comments" ("userId", "gameId", "content")
     values ($1, $2, $3)
     returning "content"
   `;
 
-  const params = [userId, gameId, comment];
-  db.query(sql, params)
+  const sqlRating = `
+    insert into "ratings" ("userId", "gameId", "ratingValue")
+    values ($1, $2, $3)
+    returning "ratingValue"
+  `;
+
+  const paramsRating = [userId, gameId, rating];
+
+  const ratingPromise = db.query(sqlRating, paramsRating)
     .then(result => {
-      const [comments] = result.rows;
-      res.status(200).json(comments);
-    }).catch(err => next(err));
+      return result.rows[0];
+    });
+
+  const params = [userId, gameId, comment];
+
+  const commentPromise = db.query(sql, params)
+    .then(result => {
+      return result.rows[0];
+    });
+
+  Promise.all([ratingPromise, commentPromise]).then(bothResults => {
+    res.status(200).json(bothResults);
+  })
+    .catch(err => next(err));
 });
 
 app.get('/api/search', (req, res, next) => {

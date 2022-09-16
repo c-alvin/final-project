@@ -23,7 +23,7 @@
 }
 
 .spacer-line {
-  border: 1px solid gray;
+  border: 1px solid black;
 }
 
 .font-lig {
@@ -124,6 +124,11 @@ body {
 
 .align-center {
   align-items: center;
+}
+
+.bottom-border {
+  border-bottom: gray solid 0.1rem;
+  margin-bottom: 2rem;
 }
 
 .font-small {
