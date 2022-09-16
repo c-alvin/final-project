@@ -12,11 +12,13 @@ export default class Details extends React.Component {
       comment: '',
       comments: [],
       backgroundImage: '',
-      isOpen: false
+      isOpen: false,
+      rating: undefined
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClickStar = this.handleClickStar.bind(this);
   }
 
   componentDidMount() {
@@ -74,6 +76,12 @@ export default class Details extends React.Component {
         isOpen: true
       });
     }
+  }
+
+  handleClickStar(event) {
+    this.setState({
+      rating: event.target.getAttribute('data-index')
+    });
   }
 
   render() {
@@ -137,6 +145,7 @@ export default class Details extends React.Component {
           {
             this.state.gameInfo[0].videos && (
               this.state.gameInfo[0].videos.map((video, index) => {
+                index += 1;
                 return (
                   <Image key={index} className='video-img' src={`https://img.youtube.com/vi/${video.video_id}/hqdefault.jpg`} />
                 );
@@ -166,17 +175,16 @@ export default class Details extends React.Component {
           </div>
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              {/* <div>
+              <div className='mb-1'>
                 {
-                  [...Array(5).map((star, index) => {
+                  new Array(5).fill().map((star, index) => {
+                    index += 1;
                     return (
-                      <button type="button" key={index}>
-                        <i className="fa-solid fa-star"></i>
-                      </button>
+                        <i key={index} data-index={index} onClick={this.handleClickStar} className={index <= this.state.rating ? 'fa-solid fa-star gold' : 'fa-regular fa-star'}></i>
                     );
-                  })]
+                  })
                 }
-              </div> */}
+              </div>
               <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
             </Form.Group>

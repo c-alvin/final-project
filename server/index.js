@@ -48,9 +48,8 @@ app.get('/api/details', (req, res, next) => {
 });
 
 app.post('/api/details/comment', (req, res, next) => {
-  const { comment, gameId } = req.body;
+  const { comment, gameId, rating } = req.body;
   const userId = 1;
-  const rating = 5; // hard coded it for now until i get the stars to work
   const sql = `
     insert into "comments" ("userId", "gameId", "content")
     values ($1, $2, $3)

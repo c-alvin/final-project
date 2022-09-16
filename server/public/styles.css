@@ -23,7 +23,7 @@
 }
 
 .spacer-line {
-  border: 1px solid black;
+  border: 1px solid gray;
 }
 
 .font-lig {
@@ -149,4 +149,8 @@ body {
 
 #button-white {
   color: white;
+}
+
+.gold {
+  color: gold;
 }
