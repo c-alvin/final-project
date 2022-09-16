@@ -40,21 +40,6 @@ export default class Details extends React.Component {
     });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.comments !== prevProps.comments) {
-  //     fetch('/api/details/comment')
-  //       .then(res => res.json())
-  //       .then(result => {
-  //         console.log(this.state.comments);
-  //         this.setState({
-  //           comments: this.state.comments.push(result),
-  //           comment: '',
-  //           isOpen: false
-  //         });
-  //       });
-  //   }
-  // }
-
   handleSubmit(event) {
     event.preventDefault();
     const req = {
@@ -91,14 +76,10 @@ export default class Details extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
     if (this.state.gameInfo === null) {
       return null;
     }
-    // console.log(this.state.comment);
     const { name } = this.state.gameInfo[0];
-    // let { image_id: screenshotId } = this.state.gameInfo[0].screenshots[Math.floor(Math.random() * ((this.state.gameInfo[0].screenshots.length - 1) - 0) + 1) + 0];
-    // screenshotId = `${screenshotId}.jpg`;
 
     let description = 'No Summary Available';
 

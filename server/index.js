@@ -19,7 +19,6 @@ app.use(express.json());
 
 app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
-  // console.log(search);
 
   const sql = `
   select "content"
@@ -50,11 +49,8 @@ app.get('/api/details', (req, res, next) => {
 
 app.post('/api/details/comment', (req, res, next) => {
   const { comment, gameId } = req.body;
-  // console.log('hi');
   const userId = 1;
-  // if (!comment) {
-  //   throw new ClientError(400, 'Comments are required');
-  // }
+
   const sql = `
     insert into "comments" ("userId", "gameId", "content")
     values ($1, $2, $3)
