@@ -40,6 +40,21 @@ export default class Details extends React.Component {
     });
   }
 
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.comments !== prevProps.comments) {
+  //     fetch('/api/details/comment')
+  //       .then(res => res.json())
+  //       .then(result => {
+  //         console.log(this.state.comments);
+  //         this.setState({
+  //           comments: this.state.comments.push(result),
+  //           comment: '',
+  //           isOpen: false
+  //         });
+  //       });
+  //   }
+  // }
+
   handleSubmit(event) {
     event.preventDefault();
     const req = {
@@ -49,14 +64,17 @@ export default class Details extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
-    // console.log(this.state);
     fetch('/api/details/comment', req)
       .then(res => res.json())
-      .then(result =>
+      .then(result => {
+        const test = this.state.comments;
+        test.push(result);
         this.setState({
+          comments: test,
           comment: '',
           isOpen: false
-        }))
+        });
+      })
     ;
   }
 
@@ -77,7 +95,7 @@ export default class Details extends React.Component {
     if (this.state.gameInfo === null) {
       return null;
     }
-
+    // console.log(this.state.comment);
     const { name } = this.state.gameInfo[0];
     // let { image_id: screenshotId } = this.state.gameInfo[0].screenshots[Math.floor(Math.random() * ((this.state.gameInfo[0].screenshots.length - 1) - 0) + 1) + 0];
     // screenshotId = `${screenshotId}.jpg`;
@@ -156,7 +174,7 @@ export default class Details extends React.Component {
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
-              <button type="submit" className="btn btn-info float-end" >COMMENT</button>
+              <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
             </Form.Group>
           </Form>
         </div>
