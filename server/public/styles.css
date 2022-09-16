@@ -14,6 +14,10 @@
   background-color: #04252e;
 }
 
+.font-roboto {
+  font-family: Roboto, sans-serif;
+}
+
 .color-text-white {
   color: white;
 }
@@ -120,6 +124,22 @@ body {
 
 .align-center {
   align-items: center;
+}
+
+.font-small {
+  font-size: 1rem;
+}
+
+.font-very-small {
+  font-size: 0.75rem;
+}
+
+.margin-top-user {
+  margin-top: -0.5rem;
+}
+
+.margin-bot-user {
+  margin-bottom: -0.5rem;
 }
 
 /* .background-image {
