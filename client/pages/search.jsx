@@ -54,10 +54,10 @@ export default class Search extends React.Component {
                 dateTest = dateTest.getFullYear();
                 return (
                   <div className="display-flex" key={game.id}>
-                    <a href={`#details?gameId=${game.id}`}><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${game?.cover?.image_id}.jpg`}></img></a>
-                    <div className='color-text-lightblue font-lig margin-left'>{`(${game.name})`}
+                    <a href={`#details?gameId=${game.id}`}><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
+                    <div className='color-text-lightblue font-lig margin-left'>{`${game.name}`}
                       <div>
-                        <span>{dateTest}</span>
+                        <span>({dateTest})</span>
                         {
                           game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];

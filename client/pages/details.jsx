@@ -1,6 +1,7 @@
 import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -110,7 +111,7 @@ export default class Details extends React.Component {
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
         <div className='col'>
-          <img src={`https://images.igdb.com/igdb/image/upload/t_thumb_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
+          <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
         </div>
         <div className='col'>
             <h4 id="game-title" className='color-text-white font-lig margin-right-small'>{`${name} (${dateTest})`}</h4>
@@ -122,6 +123,7 @@ export default class Details extends React.Component {
       <div className='row'>
         <div className='color-text-white col-md-6 font-lig'>
           <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>SUMMARY</h1>
+            {/* <img src="https://img.youtube.com/vi/L93H7YC-83o/hqdefault.jpg " alt="" /> */}
           <p className='font-inter'>{description}</p>
           {
             this.state.gameInfo[0].genres.map((genre, index) => {
@@ -131,6 +133,17 @@ export default class Details extends React.Component {
                 </div>
               );
             })
+          }
+          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>VIDEOS</h1>
+          {
+            this.state.gameInfo[0].videos && (
+              this.state.gameInfo[0].videos.map((video, index) => {
+                return (
+                  <Image key={index} className='video-img' src={`https://img.youtube.com/vi/${video.video_id}/hqdefault.jpg`} />
+                );
+              }
+              )
+            )
           }
         </div>
         <div className='color-text-white col-md-6 font-lig'>
