@@ -13,7 +13,8 @@ export default class Details extends React.Component {
       comments: [],
       backgroundImage: '',
       isOpen: false,
-      rating: undefined
+      rating: undefined,
+      avgRating: undefined
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -30,6 +31,7 @@ export default class Details extends React.Component {
         screenshotId = `${screenshotId}.jpg`;
         this.setState({
           backgroundImage: screenshotId,
+          avgRating: gameInfo[2][0],
           gameInfo: gameInfo[0],
           comments: gameInfo[1]
         });
@@ -112,20 +114,57 @@ export default class Details extends React.Component {
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
+    // let stars;
+    // if (this.state.avgRating !== undefined) {
+    //   stars = new Array(5).fill().map((star, index) => {
+    //     index += 1;
+    //     return (
+    //       <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
+    //     );
+    //   });
+    // } else {
+    // stars = new Array(5).fill().map((star, index) => {
+    //   index += 1;
+    //   return (
+    //       <i key={index} className="fa-regular fa-star heading-star star-size"></i>
+    //   );
+    // });
+    // // }
+
     const revealedForm = this.state.isOpen
       ? 'show'
       : 'hidden';
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
-        <div className='col'>
+        <div className='col-12 col-md-6 position-rel'>
           <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
-        </div>
-        <div className='col'>
-            <h4 id="game-title" className='color-text-white font-lig margin-right-small'>{`${name} (${dateTest})`}</h4>
-        </div>
-        <div className='col'>
-            <Badge id="rating" bg="info">{rating}</Badge>
+          <h4 id="game-title" className='color-text-white font-lig fs-5 margin-right-small'>{`${name} (${dateTest})`}</h4>
+          <Badge id="rating" bg="info">{rating}</Badge>
+          <div className='star-position'>
+              {this.state.avgRating !== undefined
+                ? this.state.avgRating !== undefined && (
+                  new Array(5).fill().map((star, index) => {
+                    index += 1;
+                    return (
+                      <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
+                    );
+                  }))
+                : new Array(5).fill().map((star, index) => {
+                  index += 1;
+                  return (
+                    <i key={index} className="fa-regular fa-star heading-star star-size"></i>
+                  );
+                })
+              // this.state.avgRating !== undefined && (
+              //   new Array(5).fill().map((star, index) => {
+              //     index += 1;
+              //     return (
+              //     <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
+              //     );
+              //   }))
+           }
+          </div>
         </div>
       </div>
       <div className='row'>

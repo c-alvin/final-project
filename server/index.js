@@ -4,6 +4,7 @@ const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const fetch = require('node-fetch');
 const pg = require('pg');
+// const ClientError = require('./client-error');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -25,7 +26,22 @@ app.get('/api/details', (req, res, next) => {
     from "comments"
     where "gameId" = $1
   `;
+
+  const sqlAverageRatings = `
+  select avg("ratingValue")
+    from "ratings"
+    where "gameId" = $1
+    group by "gameId" = $1
+  `;
+
+  const paramsRatings = [search];
   const params = [search];
+
+  const ratingsPromise = db.query(sqlAverageRatings, paramsRatings)
+    .then(result => {
+      return result.rows;
+    });
+
   const commentsPromise = db.query(sql, params)
     .then(result => {
       return result.rows;
@@ -41,7 +57,7 @@ app.get('/api/details', (req, res, next) => {
   })
     .then(res => res.json());
 
-  Promise.all([detailsPromise, commentsPromise]).then(bothResults => {
+  Promise.all([detailsPromise, commentsPromise, ratingsPromise]).then(bothResults => {
     res.status(200).json(bothResults);
   })
     .catch(err => next(err));
