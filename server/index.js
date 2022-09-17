@@ -4,7 +4,6 @@ const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
 const fetch = require('node-fetch');
 const pg = require('pg');
-// const ClientError = require('./client-error');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -22,7 +21,7 @@ app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
 
   const sql = `
-  select "content" , "ratingValue"
+  select "content" , "ratingValue", "createdAt"
     from "reviews"
     where "gameId" = $1
   `;
@@ -69,21 +68,8 @@ app.post('/api/details/comment', (req, res, next) => {
   const sql = `
     insert into "reviews" ("userId", "gameId", "content", "ratingValue")
     values ($1, $2, $3, $4)
-    returning "content", "ratingValue"
+    returning "content", "ratingValue", "createdAt"
   `;
-
-  // const sqlRating = `
-  //   insert into "ratings" ("userId", "gameId", "ratingValue")
-  //   values ($1, $2, $3)
-  //   returning "ratingValue"
-  // `;
-
-  // const paramsRating = [userId, gameId, rating];
-
-  // const ratingPromise = db.query(sqlRating, paramsRating)
-  //   .then(result => {
-  //     return result.rows[0];
-  //   });
 
   const params = [userId, gameId, comment, rating];
 

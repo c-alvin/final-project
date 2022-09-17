@@ -11,7 +11,8 @@ CREATE TABLE "public"."reviews" (
 	"userId" int NOT NULL,
 	"content" TEXT NOT NULL,
 	"gameId" int NOT NULL,
-	"ratingValue" int NOT NULL,
+  "createdAt" timestamp with time zone NOT NULL default now(),
+	"ratingValue" int,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("commentId")
 ) WITH (
   OIDS=FALSE

@@ -57,14 +57,19 @@ export default class Details extends React.Component {
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
-        // console.log(result);
         const test = this.state.comments.slice();
-        // console.log(result.rows[0].content);
         test.push(result[0]);
+        const average = (this.state.avgRating)
+          ? Number(this.state.avgRating.avg)
+          : 0;
+        const newAvg = {};
+        newAvg.avg = ((average * (this.state.comments.length)) + result[0].ratingValue) / (this.state.comments.length + 1);
         this.setState({
           comments: test,
           comment: '',
-          isOpen: false
+          isOpen: false,
+          rating: undefined,
+          avgRating: newAvg
         });
       })
     ;
@@ -116,23 +121,6 @@ export default class Details extends React.Component {
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
-    // let stars;
-    // if (this.state.avgRating !== undefined) {
-    //   stars = new Array(5).fill().map((star, index) => {
-    //     index += 1;
-    //     return (
-    //       <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
-    //     );
-    //   });
-    // } else {
-    // stars = new Array(5).fill().map((star, index) => {
-    //   index += 1;
-    //   return (
-    //       <i key={index} className="fa-regular fa-star heading-star star-size"></i>
-    //   );
-    // });
-    // // }
-
     const revealedForm = this.state.isOpen
       ? 'show'
       : 'hidden';
@@ -141,30 +129,23 @@ export default class Details extends React.Component {
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
         <div className='col-12 col-md-6 position-rel'>
           <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
-          <h4 id="game-title" className='color-text-white font-lig fs-5 margin-right-small'>{`${name} (${dateTest})`}</h4>
+          <h4 id="game-title" className='color-text-white font-lig fs-4 margin-right-small'>{`${name} (${dateTest})`}</h4>
           <Badge id="rating" bg="info">{rating}</Badge>
           <div className='star-position'>
-              {this.state.avgRating !== undefined
-                ? this.state.avgRating !== undefined && (
-                  new Array(5).fill().map((star, index) => {
-                    index += 1;
-                    return (
-                      <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
-                    );
-                  }))
-                : new Array(5).fill().map((star, index) => {
+            {this.state.avgRating !== undefined
+              ? this.state.avgRating !== undefined && (
+                new Array(5).fill().map((star, index) => {
                   index += 1;
                   return (
-                    <i key={index} className="fa-regular fa-star heading-star star-size"></i>
+                    <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
                   );
-                })
-              // this.state.avgRating !== undefined && (
-              //   new Array(5).fill().map((star, index) => {
-              //     index += 1;
-              //     return (
-              //     <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
-              //     );
-              //   }))
+                }))
+              : new Array(5).fill().map((star, index) => {
+                index += 1;
+                return (
+                  <i key={index} className="fa-regular fa-star heading-star star-size"></i>
+                );
+              })
            }
           </div>
         </div>
@@ -197,23 +178,25 @@ export default class Details extends React.Component {
         </div>
         <div className='color-text-white col-md-6 font-lig'>
           <div className='display-flex space-between align-center'>
-            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`COMMENTS(${this.state.comments.length})`}</h1>
+            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`REVIEWS(${this.state.comments.length})`}</h1>
             <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
           </div>
           <div>
             {
             this.state.comments.length > 0 && (
               this.state.comments.map((comment, index) => {
+                const date = new Date(comment.createdAt);
+                const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
                 <div key = { index }>
-                  <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy
+                    <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
                   {
-                        new Array(5).fill().map((star, index) => {
-                          index += 1;
-                          return (
-                            <i key={index} className={index <= comment.ratingValue ? 'fa-solid fa-star gold star-size-small' : 'fa-regular fa-star star-size-small'}></i>
-                          );
-                        })
+                    new Array(5).fill().map((star, index) => {
+                      index += 1;
+                      return (
+                        <i key={index} className={index <= comment.ratingValue ? 'fa-solid fa-star gold star-size-small' : 'fa-regular fa-star star-size-small'}></i>
+                      );
+                    })
                   }
                   </h1>
                   <hr className='spacer-line'/>
@@ -235,7 +218,7 @@ export default class Details extends React.Component {
                   })
                 }
               </div>
-              <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
+              <Form.Control onChange={this.handleChange} value={this.state.comment} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
             </Form.Group>
           </Form>

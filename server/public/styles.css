@@ -76,7 +76,6 @@ img {
   position: relative;
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
   border: #18464b solid 0.2rem;
-  border-bottom: none;
 }
 
 #game-logo {
@@ -103,8 +102,8 @@ img {
 
 #rating {
   position: absolute;
-  bottom: 9.75rem;
-  left: 1.5rem;
+  bottom: 9.6rem;
+  left: 1.7rem;
   padding: 1rem 0.5rem;
 }
 
@@ -177,4 +176,8 @@ body {
 
 .position-rel {
   position: relative;
+}
+
+.justify-center {
+  justify-content: center;
 }
