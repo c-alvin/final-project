@@ -57,8 +57,10 @@ export default class Details extends React.Component {
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
+        // console.log(result);
         const test = this.state.comments.slice();
-        test.push(result[1]);
+        // console.log(result.rows[0].content);
+        test.push(result.rows[0]);
         this.setState({
           comments: test,
           comment: '',
@@ -204,7 +206,9 @@ export default class Details extends React.Component {
               this.state.comments.map((comment, index) => {
                 return (
                 <div key = { index }>
-                <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy</h1>
+                <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy
+                {}
+                </h1>
                 <hr className='spacer-line'/>
                 <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
                 </div>
