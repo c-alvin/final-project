@@ -60,7 +60,7 @@ export default class Details extends React.Component {
         // console.log(result);
         const test = this.state.comments.slice();
         // console.log(result.rows[0].content);
-        test.push(result.rows[0]);
+        test.push(result[0]);
         this.setState({
           comments: test,
           comment: '',
@@ -206,11 +206,18 @@ export default class Details extends React.Component {
               this.state.comments.map((comment, index) => {
                 return (
                 <div key = { index }>
-                <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy
-                {}
-                </h1>
-                <hr className='spacer-line'/>
-                <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
+                  <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy
+                  {
+                        new Array(5).fill().map((star, index) => {
+                          index += 1;
+                          return (
+                            <i key={index} className={index <= comment.ratingValue ? 'fa-solid fa-star gold star-size-small' : 'fa-regular fa-star star-size-small'}></i>
+                          );
+                        })
+                  }
+                  </h1>
+                  <hr className='spacer-line'/>
+                  <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
                 </div>
                 );
               }))

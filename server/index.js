@@ -22,7 +22,7 @@ app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
 
   const sql = `
-  select "content"
+  select "content" , "ratingValue"
     from "reviews"
     where "gameId" = $1
   `;
@@ -89,7 +89,7 @@ app.post('/api/details/comment', (req, res, next) => {
 
   db.query(sql, params)
     .then(result => {
-      res.status(200).json(result);
+      res.status(200).json(result.rows);
     })
     .catch(err => next(err))
   ;
