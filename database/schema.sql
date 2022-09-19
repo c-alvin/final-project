@@ -6,12 +6,14 @@ drop schema "public" cascade;
 
 create schema "public";
 
-CREATE TABLE "public"."comments" (
+CREATE TABLE "public"."reviews" (
 	"commentId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"content" TEXT NOT NULL,
 	"gameId" int NOT NULL,
-	CONSTRAINT "comments_pk" PRIMARY KEY ("commentId")
+  "createdAt" timestamp with time zone NOT NULL default now(),
+	"ratingValue" int,
+	CONSTRAINT "reviews_pk" PRIMARY KEY ("commentId")
 ) WITH (
   OIDS=FALSE
 );
@@ -29,18 +31,6 @@ CREATE TABLE "public"."users" (
 
 
 
-CREATE TABLE "public"."ratings" (
-	"ratingId" serial NOT NULL,
-	"ratingValue" int NOT NULL,
-	"userId" int NOT NULL,
-	"gameId" int NOT NULL,
-	CONSTRAINT "ratings_pk" PRIMARY KEY ("ratingId")
-) WITH (
-  OIDS=FALSE
-);
-
-
-
 CREATE TABLE "public"."favorites" (
 	"gameId" int NOT NULL,
 	"userId" int NOT NULL,
@@ -51,11 +41,6 @@ CREATE TABLE "public"."favorites" (
 
 
 
-ALTER TABLE "comments" ADD CONSTRAINT "comments_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-
-
-
-ALTER TABLE "ratings" ADD CONSTRAINT "ratings_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
-
+ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 
 ALTER TABLE "favorites" ADD CONSTRAINT "favorites_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");

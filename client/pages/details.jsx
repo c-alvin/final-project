@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import StarRating from '../components/star-rating';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -12,11 +13,14 @@ export default class Details extends React.Component {
       comment: '',
       comments: [],
       backgroundImage: '',
-      isOpen: false
+      isOpen: false,
+      rating: undefined,
+      avgRating: 0
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClickStar = this.handleClickStar.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +32,7 @@ export default class Details extends React.Component {
         screenshotId = `${screenshotId}.jpg`;
         this.setState({
           backgroundImage: screenshotId,
+          avgRating: gameInfo[2][0],
           gameInfo: gameInfo[0],
           comments: gameInfo[1]
         });
@@ -54,11 +59,18 @@ export default class Details extends React.Component {
       .then(res => res.json())
       .then(result => {
         const test = this.state.comments.slice();
-        test.push(result);
+        test.push(result[0]);
+        const average = (this.state.avgRating)
+          ? Number(this.state.avgRating.avg)
+          : 0;
+        const newAvg = {};
+        newAvg.avg = ((average * (this.state.comments.length)) + result[0].ratingValue) / (this.state.comments.length + 1);
         this.setState({
           comments: test,
           comment: '',
-          isOpen: false
+          isOpen: false,
+          rating: undefined,
+          avgRating: newAvg
         });
       })
     ;
@@ -74,6 +86,12 @@ export default class Details extends React.Component {
         isOpen: true
       });
     }
+  }
+
+  handleClickStar(event) {
+    this.setState({
+      rating: event.target.getAttribute('data-index')
+    });
   }
 
   render() {
@@ -110,14 +128,16 @@ export default class Details extends React.Component {
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
-        <div className='col'>
+        <div className='col-12 col-md-6 position-rel'>
           <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
-        </div>
-        <div className='col'>
-            <h4 id="game-title" className='color-text-white font-lig margin-right-small'>{`${name} (${dateTest})`}</h4>
-        </div>
-        <div className='col'>
-            <Badge id="rating" bg="info">{rating}</Badge>
+          <Badge id="rating" bg="info">{rating}</Badge>
+          <div className='star-position'>
+            {this.state.avgRating !== undefined
+              ? <StarRating rating={this.state.avgRating.avg} starSize="star-size star-border"/>
+              : <StarRating rating={undefined} starSize="star-size heading-star" />
+           }
+          </div>
+          <h4 id="game-title" className='color-text-white font-lig fs-4 margin-right-small'>{`${name} (${dateTest})`}</h4>
         </div>
       </div>
       <div className='row'>
@@ -137,6 +157,7 @@ export default class Details extends React.Component {
           {
             this.state.gameInfo[0].videos && (
               this.state.gameInfo[0].videos.map((video, index) => {
+                index += 1;
                 return (
                   <Image key={index} className='video-img' src={`https://img.youtube.com/vi/${video.video_id}/hqdefault.jpg`} />
                 );
@@ -147,18 +168,22 @@ export default class Details extends React.Component {
         </div>
         <div className='color-text-white col-md-6 font-lig'>
           <div className='display-flex space-between align-center'>
-            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`COMMENTS(${this.state.comments.length})`}</h1>
+            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`REVIEWS(${this.state.comments.length})`}</h1>
             <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
           </div>
           <div>
             {
             this.state.comments.length > 0 && (
               this.state.comments.map((comment, index) => {
+                const date = new Date(comment.createdAt);
+                const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
                 <div key = { index }>
-                <h1 className='color-text-lightblue font-small font-roboto margin-bot-user'>Alveezy</h1>
-                <hr className='spacer-line'/>
-                <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
+                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
+                  <StarRating rating={comment.ratingValue} />
+                  </h1>
+                  <hr className='spacer-line'/>
+                  <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
                 </div>
                 );
               }))
@@ -166,7 +191,10 @@ export default class Details extends React.Component {
           </div>
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-              <Form.Control onChange={this.handleChange} as="textarea" rows={3} />
+              <div className='mb-1'>
+              <StarRating rating={this.state.rating} onClick={this.handleClickStar} />
+              </div>
+              <Form.Control onChange={this.handleChange} value={this.state.comment} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
             </Form.Group>
           </Form>

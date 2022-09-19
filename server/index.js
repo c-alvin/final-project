@@ -21,11 +21,26 @@ app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
 
   const sql = `
-  select "content"
-    from "comments"
+  select "content" , "ratingValue", "createdAt"
+    from "reviews"
     where "gameId" = $1
   `;
+
+  const sqlAverageRatings = `
+  select avg("ratingValue")
+    from "reviews"
+    where "gameId" = $1
+    group by "gameId" = $1
+  `;
+
+  const paramsRatings = [search];
   const params = [search];
+
+  const ratingsPromise = db.query(sqlAverageRatings, paramsRatings)
+    .then(result => {
+      return result.rows;
+    });
+
   const commentsPromise = db.query(sql, params)
     .then(result => {
       return result.rows;
@@ -41,28 +56,30 @@ app.get('/api/details', (req, res, next) => {
   })
     .then(res => res.json());
 
-  Promise.all([detailsPromise, commentsPromise]).then(bothResults => {
+  Promise.all([detailsPromise, commentsPromise, ratingsPromise]).then(bothResults => {
     res.status(200).json(bothResults);
   })
     .catch(err => next(err));
 });
 
 app.post('/api/details/comment', (req, res, next) => {
-  const { comment, gameId } = req.body;
+  const { comment, gameId, rating } = req.body;
   const userId = 1;
-
   const sql = `
-    insert into "comments" ("userId", "gameId", "content")
-    values ($1, $2, $3)
-    returning "content"
+    insert into "reviews" ("userId", "gameId", "content", "ratingValue")
+    values ($1, $2, $3, $4)
+    returning "content", "ratingValue", "createdAt"
   `;
 
-  const params = [userId, gameId, comment];
+  const params = [userId, gameId, comment, rating];
+
   db.query(sql, params)
     .then(result => {
-      const [comments] = result.rows;
-      res.status(200).json(comments);
-    }).catch(err => next(err));
+      res.status(200).json(result.rows);
+    })
+    .catch(err => next(err))
+  ;
+
 });
 
 app.get('/api/search', (req, res, next) => {
