@@ -83,7 +83,7 @@ img {
   height: 200px;
   width: 150px;
   bottom: 0;
-  left: 1.5rem;
+  left: 1rem;
   object-fit: fill;
   border-radius: 0.5rem;
   border: solid black 0.2rem;
@@ -92,7 +92,7 @@ img {
 #game-title {
   position: absolute;
   bottom: 3rem;
-  left: 11.5rem;
+  left: 11rem;
   font-size: 24px;
 }
 
@@ -103,7 +103,7 @@ img {
 #rating {
   position: absolute;
   bottom: 9.6rem;
-  left: 1.7rem;
+  left: 1.2rem;
   padding: 1rem 0.5rem;
 }
 
@@ -170,7 +170,7 @@ body {
 
 .star-position {
   position: absolute;
-  left: 11.5rem;
+  left: 11rem;
   bottom: 1rem;
 }
 
