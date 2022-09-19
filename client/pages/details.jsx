@@ -2,6 +2,7 @@ import React from 'react';
 import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
+import StarRating from '../components/star-rating';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class Details extends React.Component {
       backgroundImage: '',
       isOpen: false,
       rating: undefined,
-      avgRating: undefined
+      avgRating: 0
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -129,25 +130,14 @@ export default class Details extends React.Component {
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
         <div className='col-12 col-md-6 position-rel'>
           <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
-          <h4 id="game-title" className='color-text-white font-lig fs-4 margin-right-small'>{`${name} (${dateTest})`}</h4>
           <Badge id="rating" bg="info">{rating}</Badge>
           <div className='star-position'>
             {this.state.avgRating !== undefined
-              ? this.state.avgRating !== undefined && (
-                new Array(5).fill().map((star, index) => {
-                  index += 1;
-                  return (
-                    <i key={index} className={index <= this.state.avgRating.avg ? 'fa-solid fa-star gold star-size' : 'fa-regular fa-star heading-star star-size'}></i>
-                  );
-                }))
-              : new Array(5).fill().map((star, index) => {
-                index += 1;
-                return (
-                  <i key={index} className="fa-regular fa-star heading-star star-size"></i>
-                );
-              })
+              ? <StarRating rating={this.state.avgRating.avg} starSize="star-size star-border"/>
+              : <StarRating rating={undefined} starSize="star-size heading-star" />
            }
           </div>
+          <h4 id="game-title" className='color-text-white font-lig fs-4 margin-right-small'>{`${name} (${dateTest})`}</h4>
         </div>
       </div>
       <div className='row'>
@@ -189,15 +179,8 @@ export default class Details extends React.Component {
                 const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
                 <div key = { index }>
-                    <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
-                  {
-                    new Array(5).fill().map((star, index) => {
-                      index += 1;
-                      return (
-                        <i key={index} className={index <= comment.ratingValue ? 'fa-solid fa-star gold star-size-small' : 'fa-regular fa-star star-size-small'}></i>
-                      );
-                    })
-                  }
+                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
+                  <StarRating rating={comment.ratingValue} />
                   </h1>
                   <hr className='spacer-line'/>
                   <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
@@ -209,14 +192,7 @@ export default class Details extends React.Component {
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <div className='mb-1'>
-                {
-                  new Array(5).fill().map((star, index) => {
-                    index += 1;
-                    return (
-                        <i key={index} data-index={index} onClick={this.handleClickStar} className={index <= this.state.rating ? 'fa-solid fa-star gold' : 'fa-regular fa-star'}></i>
-                    );
-                  })
-                }
+              <StarRating rating={this.state.rating} onClick={this.handleClickStar} />
               </div>
               <Form.Control onChange={this.handleChange} value={this.state.comment} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
