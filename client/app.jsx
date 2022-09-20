@@ -5,12 +5,14 @@ import PageContainer from './components/page-container';
 import parseRoute from './lib/parse-route';
 import Search from './pages/search';
 import Details from './pages/details';
+import Auth from './pages/auth';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       listOfGames: null,
+      user: null,
       route: parseRoute(window.location.hash)
     };
     this.handleSearch = this.handleSearch.bind(this);
@@ -36,9 +38,13 @@ export default class App extends React.Component {
     const { listOfGames } = this.state;
     const { handleSearch } = this;
     const { handleDetails } = this;
+    const { user } = this.state;
     // const { game } = this.state;
     if (route.path === '') {
       return <Home />;
+    }
+    if (route.path === 'sign-up') {
+      return <Auth route={route} user={user} />;
     }
     if (route.path === 'search') {
       return <Search listOfGames={listOfGames} searchTerm={searchTerm} search={handleSearch}/>;

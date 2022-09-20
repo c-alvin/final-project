@@ -142,7 +142,7 @@ export default class Details extends React.Component {
       </div>
       <div className='row'>
         <div className='color-text-white col-md-6 font-lig'>
-          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>SUMMARY</h1>
+          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>Summary</h1>
           <p className='font-inter'>{description}</p>
           {
             this.state.gameInfo[0].genres.map((genre, index) => {
@@ -153,7 +153,7 @@ export default class Details extends React.Component {
               );
             })
           }
-          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>VIDEOS</h1>
+          <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>Videos</h1>
           {
             this.state.gameInfo[0].videos && (
               this.state.gameInfo[0].videos.map((video, index) => {
@@ -168,7 +168,7 @@ export default class Details extends React.Component {
         </div>
         <div className='color-text-white col-md-6 font-lig'>
           <div className='display-flex space-between align-center'>
-            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`REVIEWS(${this.state.comments.length})`}</h1>
+            <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`Reviews(${this.state.comments.length})`}</h1>
             <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
           </div>
           <div>
@@ -195,7 +195,7 @@ export default class Details extends React.Component {
               <StarRating rating={this.state.rating} onClick={this.handleClickStar} />
               </div>
               <Form.Control onChange={this.handleChange} value={this.state.comment} as="textarea" rows={3} />
-              <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >COMMENT</button>
+              <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >SUBMIT</button>
             </Form.Group>
           </Form>
         </div>

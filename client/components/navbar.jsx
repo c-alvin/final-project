@@ -46,7 +46,7 @@ export default class NavbarComp extends React.Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
               <li className="nav-item active">
-                <a className="nav-link" href="#">Sign Up <span className="sr-only">(current)</span></a>
+                <a className="nav-link" href="#sign-up">Sign Up <span className="sr-only">(current)</span></a>
               </li>
             </ul>
             <Nav className="me-auto" />
