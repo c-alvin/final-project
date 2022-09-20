@@ -49,7 +49,7 @@ export default class AuthForm extends React.Component {
     return (
       <form className="w-100" onSubmit={this.handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="username" style={{ color: 'white' }} className="form-label">
+          <label htmlFor="username" className="form-label text-white">
             Username
           </label>
           <input
@@ -62,7 +62,7 @@ export default class AuthForm extends React.Component {
             className="form-control bg-light" />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" style={{ color: 'white' }} className="form-label">
+          <label htmlFor="password" className="form-label text-white">
             Password
           </label>
           <input
@@ -75,11 +75,11 @@ export default class AuthForm extends React.Component {
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <small>
-            <a style={{ color: 'white' }} href={alternateActionHref}>
+            <a className='text-white' href={alternateActionHref}>
               {alternatActionText}
             </a>
           </small>
-          <button style={{ backgroundColor: '#18464B', color: '#bfecf2' }} type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary">
             {submitButtonText}
           </button>
         </div>
