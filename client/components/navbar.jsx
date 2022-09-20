@@ -44,6 +44,11 @@ export default class NavbarComp extends React.Component {
           <Navbar.Brand className="color-lightblue font-size-large" href="#">mist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li className="nav-item active">
+                <a className="nav-link" href="#sign-up">Sign Up <span className="sr-only">(current)</span></a>
+              </li>
+            </ul>
             <Nav className="me-auto" />
             <Form className="d-flex" onSubmit= {this.handleSubmitTest}>
               <Form.Control onChange={this.handleChange}
