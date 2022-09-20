@@ -7,6 +7,7 @@ const pg = require('pg');
 const ClientError = require('./client-error');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+const jwtDecode = require('jwt-decode');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -24,8 +25,9 @@ app.get('/api/details', (req, res, next) => {
   const search = req.query.gameId;
 
   const sql = `
-  select "content" , "ratingValue", "createdAt"
+  select "content" , "ratingValue", "createdAt", "users"."username"
     from "reviews"
+    join "users" using ("userId")
     where "gameId" = $1
   `;
 
@@ -67,7 +69,8 @@ app.get('/api/details', (req, res, next) => {
 
 app.post('/api/details/comment', (req, res, next) => {
   const { comment, gameId, rating } = req.body;
-  const userId = 1;
+  const user = jwtDecode(req.header('Authorization'));
+  const { userId } = user;
   const sql = `
     insert into "reviews" ("userId", "gameId", "content", "ratingValue")
     values ($1, $2, $3, $4)

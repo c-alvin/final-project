@@ -3,6 +3,7 @@ import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import StarRating from '../components/star-rating';
+import jwtDecode from 'jwt-decode';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -51,6 +52,7 @@ export default class Details extends React.Component {
     const req = {
       method: 'POST',
       headers: {
+        Authorization: window.localStorage.getItem('react-context-jwt'),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
@@ -60,6 +62,10 @@ export default class Details extends React.Component {
       .then(result => {
         const test = this.state.comments.slice();
         test.push(result[0]);
+
+        const userName = jwtDecode(window.localStorage.getItem('react-context-jwt'));
+        test[test.length - 1].username = userName.username;
+
         const average = (this.state.avgRating)
           ? Number(this.state.avgRating.avg)
           : 0;
@@ -125,6 +131,10 @@ export default class Details extends React.Component {
     const revealedForm = this.state.isOpen
       ? 'show'
       : 'hidden';
+
+    const commentButton = !this.props.user
+      ? 'hidden'
+      : 'fa-solid fa-plus';
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
@@ -169,7 +179,7 @@ export default class Details extends React.Component {
         <div className='color-text-white col-md-6 font-lig'>
           <div className='display-flex space-between align-center'>
             <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`Reviews(${this.state.comments.length})`}</h1>
-            <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
+            <i onClick={this.handleClick} className={commentButton}></i>
           </div>
           <div>
             {
@@ -179,7 +189,7 @@ export default class Details extends React.Component {
                 const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
                 <div key = { index }>
-                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
+                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`${comment.username} - ${formattedDate} - `}
                   <StarRating rating={comment.ratingValue} />
                   </h1>
                   <hr className='spacer-line'/>

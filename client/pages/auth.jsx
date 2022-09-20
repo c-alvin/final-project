@@ -1,10 +1,13 @@
 import React from 'react';
 import AuthForm from '../components/auth-form';
+import Redirect from '../components/redirect';
 
 export default class AuthPage extends React.Component {
   render() {
 
-    const welcome = this.props.route.path === 'sign in'
+    if (this.props.user) return <Redirect to="" />;
+
+    const welcome = this.props.route.path === 'sign-in'
       ? 'Welcome Back Gamer!'
       : 'Join Our Community!';
     return (
@@ -18,7 +21,8 @@ export default class AuthPage extends React.Component {
           <div style={{ backgroundColor: '#04252e', border: 'none' }}className="card p-3 color-main-blue">
             <AuthForm
               key={this.props.route.path}
-              action={this.props.route.path} />
+              action={this.props.route.path}
+              onSignIn={this.props.signIn}/>
           </div>
         </div>
       </div>
