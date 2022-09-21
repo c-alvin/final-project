@@ -13,6 +13,7 @@
 .video-img {
   height: 10rem;
   width: 10rem;
+  object-fit: fill;
 }
 
 @media screen and (min-width: 400px) {

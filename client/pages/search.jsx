@@ -5,7 +5,10 @@ const platformImages = {
   'PC (Microsoft Windows)': './images/pc.svg',
   Xbox: './images/xbox.svg',
   PlayStation: './images/ps.svg',
-  'PlayStation 4': './images/ps.svg'
+  'PlayStation 4': './images/ps.svg',
+  'PlayStation 2': './images/ps.svg',
+  iOS: './images/ios.svg',
+  Android: './images/android.svg'
 };
 
 export default class Search extends React.Component {
@@ -57,7 +60,7 @@ export default class Search extends React.Component {
                     <a href={`#details?gameId=${game.id}`}><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
                     <div className='color-text-lightblue font-lig margin-left fs-5'>{`${game.name}`}
                       <div>
-                        <span>({dateTest})</span>
+                        <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
                         {
                           game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];

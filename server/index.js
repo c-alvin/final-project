@@ -7,7 +7,7 @@ const pg = require('pg');
 const ClientError = require('./client-error');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
-const jwtDecode = require('jwt-decode');
+const authMiddleware = require('./auth-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -67,10 +67,9 @@ app.get('/api/details', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/details/comment', (req, res, next) => {
+app.post('/api/details/comment', authMiddleware, (req, res, next) => {
   const { comment, gameId, rating } = req.body;
-  const user = jwtDecode(req.header('Authorization'));
-  const { userId } = user;
+  const { userId } = req.user;
   const sql = `
     insert into "reviews" ("userId", "gameId", "content", "ratingValue")
     values ($1, $2, $3, $4)

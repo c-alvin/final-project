@@ -3,7 +3,6 @@ import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import StarRating from '../components/star-rating';
-import jwtDecode from 'jwt-decode';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -60,11 +59,10 @@ export default class Details extends React.Component {
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
-        const test = this.state.comments.slice();
-        test.push(result[0]);
+        const slicedComments = this.state.comments.slice();
+        slicedComments.push(result[0]);
 
-        const userName = jwtDecode(window.localStorage.getItem('react-context-jwt'));
-        test[test.length - 1].username = userName.username;
+        slicedComments[slicedComments.length - 1].username = this.props.user.username;
 
         const average = (this.state.avgRating)
           ? Number(this.state.avgRating.avg)
@@ -72,7 +70,7 @@ export default class Details extends React.Component {
         const newAvg = {};
         newAvg.avg = ((average * (this.state.comments.length)) + result[0].ratingValue) / (this.state.comments.length + 1);
         this.setState({
-          comments: test,
+          comments: slicedComments,
           comment: '',
           isOpen: false,
           rating: undefined,
@@ -125,6 +123,7 @@ export default class Details extends React.Component {
     } else {
       rating = 'N/A';
     }
+
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
