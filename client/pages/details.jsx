@@ -3,6 +3,7 @@ import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import StarRating from '../components/star-rating';
+// import Pagination from '../components/pagination';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -102,6 +103,7 @@ export default class Details extends React.Component {
     if (this.state.gameInfo === null) {
       return null;
     }
+
     const { name } = this.state.gameInfo[0];
 
     let description = 'No Summary Available';

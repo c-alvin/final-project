@@ -3,3 +3,14 @@
   color: #bfecf2 !important;
   border-color: #18464b !important;
 }
+
+.page-link {
+  background-color: #18464b !important;
+  border: #18464b !important;
+  color: white !important;
+}
+
+.active > .page-link {
+  background-color: #17a2b8 !important;
+  color: white !important;
+}
