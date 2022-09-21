@@ -48,6 +48,9 @@ export default class NavbarComp extends React.Component {
               <li className="nav-item active">
                 <a className="nav-link" href="#sign-up">Sign Up <span className="sr-only">(current)</span></a>
               </li>
+              <li className="nav-item active">
+                <a className="nav-link" href="#sign-in">Sign In <span className="sr-only">(current)</span></a>
+              </li>
             </ul>
             <Nav className="me-auto" />
             <Form className="d-flex" onSubmit= {this.handleSubmitTest}>

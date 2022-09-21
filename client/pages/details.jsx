@@ -51,6 +51,7 @@ export default class Details extends React.Component {
     const req = {
       method: 'POST',
       headers: {
+        Authorization: window.localStorage.getItem('react-context-jwt'),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(this.state)
@@ -58,15 +59,18 @@ export default class Details extends React.Component {
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
-        const test = this.state.comments.slice();
-        test.push(result[0]);
+        const slicedComments = this.state.comments.slice();
+        slicedComments.push(result[0]);
+
+        slicedComments[slicedComments.length - 1].username = this.props.user.username;
+
         const average = (this.state.avgRating)
           ? Number(this.state.avgRating.avg)
           : 0;
         const newAvg = {};
         newAvg.avg = ((average * (this.state.comments.length)) + result[0].ratingValue) / (this.state.comments.length + 1);
         this.setState({
-          comments: test,
+          comments: slicedComments,
           comment: '',
           isOpen: false,
           rating: undefined,
@@ -119,12 +123,17 @@ export default class Details extends React.Component {
     } else {
       rating = 'N/A';
     }
+
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
     const revealedForm = this.state.isOpen
       ? 'show'
       : 'hidden';
+
+    const commentButton = !this.props.user
+      ? 'hidden'
+      : 'fa-solid fa-plus';
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
@@ -169,7 +178,7 @@ export default class Details extends React.Component {
         <div className='color-text-white col-md-6 font-lig'>
           <div className='display-flex space-between align-center'>
             <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`Reviews(${this.state.comments.length})`}</h1>
-            <i onClick={this.handleClick} className="fa-solid fa-plus"></i>
+            <i onClick={this.handleClick} className={commentButton}></i>
           </div>
           <div>
             {
@@ -179,7 +188,7 @@ export default class Details extends React.Component {
                 const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
                 <div key = { index }>
-                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`Alveezy - ${formattedDate} - `}
+                  <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`${comment.username} - ${formattedDate} - `}
                   <StarRating rating={comment.ratingValue} />
                   </h1>
                   <hr className='spacer-line'/>

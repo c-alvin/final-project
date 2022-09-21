@@ -6,16 +6,19 @@ import parseRoute from './lib/parse-route';
 import Search from './pages/search';
 import Details from './pages/details';
 import Auth from './pages/auth';
+import jwtDecode from 'jwt-decode';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isAuthorizing: true,
       listOfGames: null,
       user: null,
       route: parseRoute(window.location.hash)
     };
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   componentDidMount() {
@@ -24,6 +27,15 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
+    const token = window.localStorage.getItem('react-context-jwt');
+    const user = token ? jwtDecode(token) : null;
+    this.setState({ user, isAuthorizing: false });
+  }
+
+  handleSignIn(result) {
+    const { user, token } = result;
+    window.localStorage.setItem('react-context-jwt', token);
+    this.setState({ user });
   }
 
   handleSearch(result) {
@@ -39,22 +51,24 @@ export default class App extends React.Component {
     const { handleSearch } = this;
     const { handleDetails } = this;
     const { user } = this.state;
+    const { handleSignIn } = this;
     // const { game } = this.state;
     if (route.path === '') {
-      return <Home />;
+      return <Home user={user}/>;
     }
-    if (route.path === 'sign-up') {
-      return <Auth route={route} user={user} />;
+    if (route.path === 'sign-up' || route.path === 'sign-in') {
+      return <Auth route={route} user={user} signIn={handleSignIn} />;
     }
     if (route.path === 'search') {
       return <Search listOfGames={listOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
     if (route.path === 'details') {
-      return <Details details={handleDetails} gameId={gameId} />;
+      return <Details user={user} details={handleDetails} gameId={gameId} />;
     }
   }
 
   render() {
+    if (this.state.isAuthorizing) return null;
     return (
     <>
     <NavbarComp />
