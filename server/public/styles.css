@@ -204,3 +204,7 @@ body {
 .box-shadow {
   box-shadow: #021920 -0.5rem 0.5rem;
 }
+
+.margin-top-tiny {
+  margin-top: 0.25rem;
+}

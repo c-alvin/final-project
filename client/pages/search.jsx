@@ -47,7 +47,7 @@ export default class Search extends React.Component {
     return (
       <>
         <div className="row">
-          <h1 className='color-text-white font-lig font-size-large'>{`Games(${this.props.totalList.length})`}</h1>
+          <h1 className='color-text-white font-lig font-size-large header'>{`Games(${this.props.totalList.length})`}</h1>
           <hr className='spacer-line'></hr>
         </div>
         <div className="row">
@@ -62,18 +62,8 @@ export default class Search extends React.Component {
                     <div className='color-text-lightblue font-lig margin-left font-small'>{`${game.name}`}
                       <div className='display-flex align-center flex-wrap'>
                         <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
-                        {/* {
-                          game.platforms?.map((platform, index) => {
-                            const src = platformImages[platform.name];
-                            const show = platformImages[platform.name] === undefined
-                              ? 'hidden'
-                              : 'show';
-                            return <img className={`margin-left-small platform-logo ${show}`} key={index} src={src}></img>;
-                          }
-                          )
-                        } */}
                       </div>
-                      <div className='display-flex align-center flex-wrap'>
+                      <div className='display-flex align-center flex-wrap margin-top-tiny'>
                         {
                           game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];
