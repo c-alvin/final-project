@@ -18,7 +18,7 @@ export default class Details extends React.Component {
       rating: undefined,
       avgRating: 0,
       commentPage: 1,
-      commentsPerPage: 10
+      commentsPerPage: 7
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -58,15 +58,15 @@ export default class Details extends React.Component {
       });
     } else {
       this.setState({
-        commentPage: this.state.currentPage - 1
+        commentPage: this.state.commentPage - 1
       });
     }
   }
 
   handleNextPage() {
-    if (this.state.commentPage === Math.ceil(this.state.comments.length / 10)) {
+    if (this.state.commentPage === Math.ceil(this.state.comments.length / 7)) {
       this.setState({
-        commentPage: Math.ceil(this.state.comments.length / 10)
+        commentPage: Math.ceil(this.state.comments.length / 7)
       });
     } else {
       this.setState({
@@ -241,6 +241,7 @@ export default class Details extends React.Component {
               }))
             }
           </div>
+          <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} />
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <div className='mb-1'>
@@ -250,7 +251,7 @@ export default class Details extends React.Component {
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >SUBMIT</button>
             </Form.Group>
           </Form>
-            <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} />
+            {/* <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} /> */}
         </div>
       </div>
     </div>

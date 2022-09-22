@@ -57,10 +57,10 @@ export default class Search extends React.Component {
                 let dateTest = new Date(game.first_release_date * 1000);
                 dateTest = dateTest.getFullYear();
                 return (
-                  <div className="display-flex bottom-border" key={game.id}>
-                    <a href={`#details?gameId=${game.id}`}><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
+                  <div className="display-flex bottom-border raisedbox margin-top-small" key={game.id}>
+                    <a href={`#details?gameId=${game.id}`}><img className='box-shadow cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
                     <div className='color-text-lightblue font-lig margin-left fs-5'>{`${game.name}`}
-                      <div>
+                      <div className='display-flex align-center flex-wrap'>
                         <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
                         {
                           game.platforms?.map((platform, index) => {
@@ -73,6 +73,9 @@ export default class Search extends React.Component {
                           )
                         }
                       </div>
+                    <div>
+                      <span></span>
+                    </div>
                     </div>
                   </div>
                 );

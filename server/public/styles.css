@@ -23,7 +23,7 @@
 }
 
 .spacer-line {
-  border: 1px solid gray;
+  border: 1px solid #18464b;
 }
 
 .font-lig {
@@ -127,9 +127,24 @@ body {
   align-items: center;
 }
 
-.bottom-border {
+/* .bottom-border {
   border-bottom: gray solid 0.1rem;
   margin-bottom: 2rem;
+} */
+
+.raisedbox {
+  padding: 20px;
+  border: 1px solid black;
+  box-shadow:
+    -1px 1px black,
+    -2px 2px black,
+    -3px 3px black,
+    -4px 4px black,
+    -5px 5px black;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .font-small {
@@ -188,4 +203,8 @@ body {
 
 .community-svg {
   width: 8rem;
+}
+
+.box-shadow {
+  box-shadow: #021920 -0.5rem 0.5rem;
 }

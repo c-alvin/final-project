@@ -152,7 +152,7 @@ app.get('/api/search', (req, res, next) => {
       'Client-ID': process.env.CLIENT_ID,
       Authorization: process.env.API_TOKEN
     },
-    body: `fields cover.*, storyline, age_ratings.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}"; limit 25;`
+    body: `fields cover.*, storyline,  age_ratings.*,first_release_date, release_dates.*, screenshots.*, name, platforms.*; search: "${search}"; limit 50;`
   })
     .then(res => res.json())
     .then(data => res.status(200).json(data))

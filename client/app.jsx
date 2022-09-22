@@ -15,7 +15,7 @@ export default class App extends React.Component {
       isAuthorizing: true,
       listOfGames: null,
       currentPage: 1,
-      postsPerPage: 10,
+      postsPerPage: 7,
       user: null,
       route: parseRoute(window.location.hash)
     };
@@ -56,9 +56,9 @@ export default class App extends React.Component {
   }
 
   handleNextPage() {
-    if (this.state.currentPage === Math.ceil(this.state.listOfGames.length / 10)) {
+    if (this.state.currentPage === Math.ceil(this.state.listOfGames.length / 7)) {
       this.setState({
-        currentPage: Math.ceil(this.state.listOfGames.length / 10)
+        currentPage: Math.ceil(this.state.listOfGames.length / 7)
       });
     } else {
       this.setState({
