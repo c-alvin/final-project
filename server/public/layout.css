@@ -20,6 +20,13 @@
   font-size: 1rem;
 }
 
+.modal-window {
+  background-color: white;
+  border-radius: 4px;
+  height: 200px;
+  width: 350px;
+}
+
 @media screen and (min-width: 400px) {
   .background-size {
     height: 375px;
@@ -36,9 +43,34 @@
   }
 }
 
+@media screen and (min-width: 766px) {
+  .modal-window {
+    background-color: white;
+    border-radius: 4px;
+    height: 300px;
+    width: 500px;
+  }
+}
+
 @media screen and (min-width: 992px) {
   .video-img {
     height: 10rem;
     width: 12.5rem;
+  }
+
+  .modal-window {
+    background-color: white;
+    border-radius: 4px;
+    height: 500px;
+    width: 800px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .modal-window {
+    background-color: white;
+    border-radius: 4px;
+    height: 500px;
+    width: 1000px;
   }
 }
