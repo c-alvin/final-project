@@ -62,6 +62,18 @@ export default class Search extends React.Component {
                     <div className='color-text-lightblue font-lig margin-left fs-5'>{`${game.name}`}
                       <div className='display-flex align-center flex-wrap'>
                         <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
+                        {/* {
+                          game.platforms?.map((platform, index) => {
+                            const src = platformImages[platform.name];
+                            const show = platformImages[platform.name] === undefined
+                              ? 'hidden'
+                              : 'show';
+                            return <img className={`margin-left-small platform-logo ${show}`} key={index} src={src}></img>;
+                          }
+                          )
+                        } */}
+                      </div>
+                      <div className='display-flex align-center flex-wrap'>
                         {
                           game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];
@@ -74,7 +86,6 @@ export default class Search extends React.Component {
                         }
                       </div>
                     <div>
-                      <span></span>
                     </div>
                     </div>
                   </div>

@@ -16,6 +16,10 @@
   object-fit: fill;
 }
 
+.fs-5 {
+  font-size: 1rem !important;
+}
+
 @media screen and (min-width: 400px) {
   .background-size {
     height: 375px;
@@ -25,6 +29,10 @@
   .cover-game {
     height: auto;
     width: auto;
+  }
+
+  .fs-5 {
+    font-size: 1.25rem !important;
   }
 }
 
