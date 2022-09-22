@@ -39,7 +39,7 @@
 }
 
 .margin-left {
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
 
 .margin-left-small {
@@ -145,10 +145,6 @@ body {
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.font-small {
-  font-size: 1rem;
 }
 
 .font-very-small {

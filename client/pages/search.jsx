@@ -59,7 +59,7 @@ export default class Search extends React.Component {
                 return (
                   <div className="display-flex bottom-border raisedbox margin-top-small" key={game.id}>
                     <a href={`#details?gameId=${game.id}`}><img className='box-shadow cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
-                    <div className='color-text-lightblue font-lig margin-left fs-5'>{`${game.name}`}
+                    <div className='color-text-lightblue font-lig margin-left font-small'>{`${game.name}`}
                       <div className='display-flex align-center flex-wrap'>
                         <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
                         {/* {
