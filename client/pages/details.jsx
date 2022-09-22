@@ -141,9 +141,7 @@ export default class Details extends React.Component {
     const indexOfLastPost = this.state.commentPage * this.state.commentsPerPage;
     const indexOfFirstPost = indexOfLastPost - this.state.commentsPerPage;
 
-    const currentListOfComments = this.state.comments === null
-      ? null
-      : this.state.comments.slice(indexOfFirstPost, indexOfLastPost);
+    const currentListOfComments = this.state.comments.slice(indexOfFirstPost, indexOfLastPost);
 
     const { name } = this.state.gameInfo[0];
 
