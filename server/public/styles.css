@@ -208,3 +208,15 @@ body {
 .margin-top-tiny {
   margin-top: 0.25rem;
 }
+
+.modal-background {
+  display: flex;
+  background-color: rgba(0 0 0 / 70%);
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+}

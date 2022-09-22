@@ -18,7 +18,8 @@ export default class Details extends React.Component {
       rating: undefined,
       avgRating: 0,
       commentPage: 1,
-      commentsPerPage: 7
+      commentsPerPage: 7,
+      videoModal: null
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -27,6 +28,8 @@ export default class Details extends React.Component {
     this.handlePage = this.handlePage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
+    this.handleModal = this.handleModal.bind(this);
+    this.handleClickBackground = this.handleClickBackground.bind(this);
   }
 
   componentDidMount() {
@@ -128,6 +131,18 @@ export default class Details extends React.Component {
     }
   }
 
+  handleModal(event) {
+    this.setState({
+      videoModal: `https://www.youtube.com/embed/${event.target.getAttribute('data-video')}`
+    });
+  }
+
+  handleClickBackground() {
+    this.setState({
+      videoModal: null
+    });
+  }
+
   handleClickStar(event) {
     this.setState({
       rating: event.target.getAttribute('data-index')
@@ -175,6 +190,10 @@ export default class Details extends React.Component {
     const commentButton = !this.props.user
       ? 'hidden'
       : 'fa-solid fa-plus';
+
+    const modalView = this.state.videoModal === null
+      ? 'hidden'
+      : 'modal-background';
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
@@ -209,7 +228,7 @@ export default class Details extends React.Component {
               this.state.gameInfo[0].videos.map((video, index) => {
                 index += 1;
                 return (
-                  <Image key={index} className='video-img' src={`https://img.youtube.com/vi/${video.video_id}/hqdefault.jpg`} />
+                  <Image key={index} onClick={this.handleModal} data-video={video.video_id} className='video-img' src={`https://img.youtube.com/vi/${video.video_id}/hqdefault.jpg`} />
                 );
               }
               )
@@ -250,6 +269,11 @@ export default class Details extends React.Component {
             </Form.Group>
           </Form>
             {/* <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} /> */}
+        </div>
+      </div>
+      <div className={modalView} onClick={this.handleClickBackground}>
+        <div className='modal-window'>
+            <iframe src={this.state.videoModal} width="100%" height="100%" frameBorder="0"></iframe>
         </div>
       </div>
     </div>
