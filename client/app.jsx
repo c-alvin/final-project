@@ -13,7 +13,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isAuthorizing: true,
-      listOfGames: null,
+      listOfGames: [],
       currentPage: 1,
       postsPerPage: 7,
       user: null,
@@ -85,10 +85,7 @@ export default class App extends React.Component {
     const searchTerm = route.params.get('term');
     const gameId = route.params.get('gameId');
     const { listOfGames } = this.state;
-    const currentListOfGames = listOfGames === null
-      ? null
-      : listOfGames.slice(indexOfFirstPost, indexOfLastPost);
-    // const currentListOfGames = listOfGames.slice(indexOfFirstPost, indexOfLastPost);
+    const currentListOfGames = listOfGames.slice(indexOfFirstPost, indexOfLastPost);
     const { handleSearch } = this;
     const { handleDetails } = this;
     const { user } = this.state;
