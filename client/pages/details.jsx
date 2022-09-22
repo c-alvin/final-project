@@ -3,7 +3,7 @@ import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
 import Image from 'react-bootstrap/Image';
 import StarRating from '../components/star-rating';
-// import Pagination from '../components/pagination';
+import Pagination from '../components/pagination';
 
 export default class Details extends React.Component {
   constructor(props) {
@@ -16,12 +16,17 @@ export default class Details extends React.Component {
       backgroundImage: '',
       isOpen: false,
       rating: undefined,
-      avgRating: 0
+      avgRating: 0,
+      commentPage: 1,
+      commentsPerPage: 10
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClickStar = this.handleClickStar.bind(this);
+    this.handlePage = this.handlePage.bind(this);
+    this.handlePrevPage = this.handlePrevPage.bind(this);
+    this.handleNextPage = this.handleNextPage.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +43,36 @@ export default class Details extends React.Component {
           comments: gameInfo[1]
         });
       });
+  }
+
+  handlePage(num) {
+    this.setState({
+      commentPage: num
+    });
+  }
+
+  handlePrevPage() {
+    if (this.state.commentPage === 1) {
+      this.setState({
+        commentPage: 1
+      });
+    } else {
+      this.setState({
+        commentPage: this.state.currentPage - 1
+      });
+    }
+  }
+
+  handleNextPage() {
+    if (this.state.commentPage === Math.ceil(this.state.comments.length / 10)) {
+      this.setState({
+        commentPage: Math.ceil(this.state.comments.length / 10)
+      });
+    } else {
+      this.setState({
+        commentPage: this.state.commentPage + 1
+      });
+    }
   }
 
   handleChange(event) {
@@ -103,6 +138,12 @@ export default class Details extends React.Component {
     if (this.state.gameInfo === null) {
       return null;
     }
+    const indexOfLastPost = this.state.commentPage * this.state.commentsPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.state.commentsPerPage;
+
+    const currentListOfComments = this.state.comments === null
+      ? null
+      : this.state.comments.slice(indexOfFirstPost, indexOfLastPost);
 
     const { name } = this.state.gameInfo[0];
 
@@ -184,8 +225,8 @@ export default class Details extends React.Component {
           </div>
           <div>
             {
-            this.state.comments.length > 0 && (
-              this.state.comments.map((comment, index) => {
+            currentListOfComments.length > 0 && (
+              currentListOfComments.map((comment, index) => {
                 const date = new Date(comment.createdAt);
                 const formattedDate = `${(date.getMonth() + 1)}/${date.getDate()}/${date.getFullYear()}`;
                 return (
@@ -209,6 +250,7 @@ export default class Details extends React.Component {
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >SUBMIT</button>
             </Form.Group>
           </Form>
+            <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} />
         </div>
       </div>
     </div>

@@ -22,6 +22,8 @@ export default class App extends React.Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handlePage = this.handlePage.bind(this);
+    this.handlePrevPage = this.handlePrevPage.bind(this);
+    this.handleNextPage = this.handleNextPage.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +41,30 @@ export default class App extends React.Component {
     this.setState({
       currentPage: num
     });
+  }
+
+  handlePrevPage() {
+    if (this.state.currentPage === 1) {
+      this.setState({
+        currentPage: 1
+      });
+    } else {
+      this.setState({
+        currentPage: this.state.currentPage - 1
+      });
+    }
+  }
+
+  handleNextPage() {
+    if (this.state.currentPage === Math.ceil(this.state.listOfGames.length / 10)) {
+      this.setState({
+        currentPage: Math.ceil(this.state.listOfGames.length / 10)
+      });
+    } else {
+      this.setState({
+        currentPage: this.state.currentPage + 1
+      });
+    }
   }
 
   handleSignIn(result) {
@@ -69,6 +95,8 @@ export default class App extends React.Component {
     const { handleSignIn } = this;
     const { handlePage } = this;
     const { currentPage } = this.state;
+    const { handlePrevPage } = this;
+    const { handleNextPage } = this;
     if (route.path === '') {
       return <Home user={user}/>;
     }
@@ -76,7 +104,7 @@ export default class App extends React.Component {
       return <Auth route={route} user={user} signIn={handleSignIn} />;
     }
     if (route.path === 'search') {
-      return <Search totalListOfGames= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
+      return <Search handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
     if (route.path === 'details') {
       return <Details user={user} details={handleDetails} gameId={gameId} />;

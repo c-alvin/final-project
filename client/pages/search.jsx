@@ -47,7 +47,7 @@ export default class Search extends React.Component {
     return (
       <>
         <div className="row">
-          <h1 className='color-text-white font-lig font-size-large'>{`Games(${this.props.totalListOfGames.length})`}</h1>
+          <h1 className='color-text-white font-lig font-size-large'>{`Games(${this.props.totalList.length})`}</h1>
           <hr className='spacer-line'></hr>
         </div>
         <div className="row">
@@ -80,7 +80,7 @@ export default class Search extends React.Component {
               )
             }
           </div>
-          <Pagination totalListOfGames = {this.props.totalListOfGames} currentPage={this.props.currentPage} handlePage={this.props.handlePage} />
+          <Pagination handleNextPage={this.props.handleNextPage} handlePrevPage = {this.props.handlePrevPage} totalList = {this.props.totalList} currentPage={this.props.currentPage} handlePage={this.props.handlePage} />
         </div>
       </>
     );
