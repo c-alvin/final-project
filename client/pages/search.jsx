@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagination from '../components/pagination';
 
 const platformImages = {
   'Nintendo Switch': './images/nintendo.svg',
@@ -46,7 +47,7 @@ export default class Search extends React.Component {
     return (
       <>
         <div className="row">
-          <h1 className='color-text-white font-lig font-size-large'>{`Games(${this.props.listOfGames.length})`}</h1>
+          <h1 className='color-text-white font-lig font-size-large header'>{`Games(${this.props.totalList.length})`}</h1>
           <hr className='spacer-line'></hr>
         </div>
         <div className="row">
@@ -56,11 +57,13 @@ export default class Search extends React.Component {
                 let dateTest = new Date(game.first_release_date * 1000);
                 dateTest = dateTest.getFullYear();
                 return (
-                  <div className="display-flex bottom-border" key={game.id}>
-                    <a href={`#details?gameId=${game.id}`}><img className='cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
-                    <div className='color-text-lightblue font-lig margin-left fs-5'>{`${game.name}`}
-                      <div>
+                  <div className="display-flex bottom-border raisedbox margin-top-small" key={game.id}>
+                    <a href={`#details?gameId=${game.id}`}><img className='box-shadow cover-game margin-bottom border-radius-small' src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${game?.cover?.image_id}.jpg`}></img></a>
+                    <div className='color-text-lightblue font-lig margin-left font-small'>{`${game.name}`}
+                      <div className='display-flex align-center flex-wrap'>
                         <span>({!game.first_release_date ? 'N/A' : dateTest})</span>
+                      </div>
+                      <div className='display-flex align-center flex-wrap margin-top-tiny'>
                         {
                           game.platforms?.map((platform, index) => {
                             const src = platformImages[platform.name];
@@ -72,6 +75,8 @@ export default class Search extends React.Component {
                           )
                         }
                       </div>
+                    <div>
+                    </div>
                     </div>
                   </div>
                 );
@@ -79,6 +84,7 @@ export default class Search extends React.Component {
               )
             }
           </div>
+          <Pagination handleNextPage={this.props.handleNextPage} handlePrevPage = {this.props.handlePrevPage} totalList = {this.props.totalList} currentPage={this.props.currentPage} handlePage={this.props.handlePage} />
         </div>
       </>
     );

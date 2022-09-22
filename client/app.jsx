@@ -13,12 +13,17 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isAuthorizing: true,
-      listOfGames: null,
+      listOfGames: [],
+      currentPage: 1,
+      postsPerPage: 7,
       user: null,
       route: parseRoute(window.location.hash)
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handlePage = this.handlePage.bind(this);
+    this.handlePrevPage = this.handlePrevPage.bind(this);
+    this.handleNextPage = this.handleNextPage.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +37,36 @@ export default class App extends React.Component {
     this.setState({ user, isAuthorizing: false });
   }
 
+  handlePage(num) {
+    this.setState({
+      currentPage: num
+    });
+  }
+
+  handlePrevPage() {
+    if (this.state.currentPage === 1) {
+      this.setState({
+        currentPage: 1
+      });
+    } else {
+      this.setState({
+        currentPage: this.state.currentPage - 1
+      });
+    }
+  }
+
+  handleNextPage() {
+    if (this.state.currentPage === Math.ceil(this.state.listOfGames.length / 7)) {
+      this.setState({
+        currentPage: Math.ceil(this.state.listOfGames.length / 7)
+      });
+    } else {
+      this.setState({
+        currentPage: this.state.currentPage + 1
+      });
+    }
+  }
+
   handleSignIn(result) {
     const { user, token } = result;
     window.localStorage.setItem('react-context-jwt', token);
@@ -40,19 +75,25 @@ export default class App extends React.Component {
 
   handleSearch(result) {
     const games = result;
-    this.setState({ listOfGames: games });
+    this.setState({ listOfGames: games, currentPage: 1 });
   }
 
   renderPage() {
+    const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
     const { route } = this.state;
     const searchTerm = route.params.get('term');
     const gameId = route.params.get('gameId');
     const { listOfGames } = this.state;
+    const currentListOfGames = listOfGames.slice(indexOfFirstPost, indexOfLastPost);
     const { handleSearch } = this;
     const { handleDetails } = this;
     const { user } = this.state;
     const { handleSignIn } = this;
-    // const { game } = this.state;
+    const { handlePage } = this;
+    const { currentPage } = this.state;
+    const { handlePrevPage } = this;
+    const { handleNextPage } = this;
     if (route.path === '') {
       return <Home user={user}/>;
     }
@@ -60,7 +101,7 @@ export default class App extends React.Component {
       return <Auth route={route} user={user} signIn={handleSignIn} />;
     }
     if (route.path === 'search') {
-      return <Search listOfGames={listOfGames} searchTerm={searchTerm} search={handleSearch}/>;
+      return <Search handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
     if (route.path === 'details') {
       return <Details user={user} details={handleDetails} gameId={gameId} />;

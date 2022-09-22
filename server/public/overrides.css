@@ -3,3 +3,30 @@
   color: #bfecf2 !important;
   border-color: #18464b !important;
 }
+
+.page-link {
+  background-color: #18464b !important;
+  border: #18464b !important;
+  color: white !important;
+}
+
+.active > .page-link {
+  background-color: #17a2b8 !important;
+  color: white !important;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+.header {
+  margin-top: 1rem !important;
+}
