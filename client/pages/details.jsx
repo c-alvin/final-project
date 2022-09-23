@@ -273,7 +273,7 @@ export default class Details extends React.Component {
       </div>
       <div className={modalView} onClick={this.handleClickBackground}>
         <div className='modal-window'>
-            <iframe src={this.state.videoModal} width="100%" height="100%" frameBorder="0"></iframe>
+          <iframe src={this.state.videoModal} width="100%" height="100%" frameBorder="0"></iframe>
         </div>
       </div>
     </div>
