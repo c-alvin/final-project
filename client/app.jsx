@@ -21,6 +21,7 @@ export default class App extends React.Component {
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
     this.handlePage = this.handlePage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
@@ -73,6 +74,11 @@ export default class App extends React.Component {
     this.setState({ user });
   }
 
+  handleSignOut() {
+    window.localStorage.removeItem('react-context-jwt');
+    this.setState({ user: null });
+  }
+
   handleSearch(result) {
     const games = result;
     this.setState({ listOfGames: games, currentPage: 1 });
@@ -112,7 +118,7 @@ export default class App extends React.Component {
     if (this.state.isAuthorizing) return null;
     return (
     <>
-    <NavbarComp />
+    <NavbarComp handleSignOut={this.handleSignOut} user={this.state.user} />
     <PageContainer>
       { this.renderPage() }
     </PageContainer>

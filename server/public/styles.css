@@ -220,3 +220,10 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+.button-no-style {
+  border: 0;
+  padding: 0;
+  background-color: #021920;
+  color: #8d979a;
+}
