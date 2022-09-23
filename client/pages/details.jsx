@@ -202,8 +202,8 @@ export default class Details extends React.Component {
           <Badge id="rating" bg="info">{rating}</Badge>
           <div className='star-position'>
             {this.state.avgRating !== undefined
-              ? <StarRating rating={this.state.avgRating.avg} starSize="star-size star-border"/>
-              : <StarRating rating={undefined} starSize="star-size heading-star" />
+              ? <StarRating rating={this.state.avgRating.avg} starSize="star-size star-border half-star-container-heading"/>
+              : <StarRating rating={undefined} starSize="star-size heading-star half-star-container-heading" />
            }
           </div>
           <h4 id="game-title" className='color-text-white font-lig fs-4 margin-right-small'>{`${name} (${dateTest})`}</h4>
@@ -249,7 +249,7 @@ export default class Details extends React.Component {
                 return (
                 <div key = { index }>
                   <h1 className='color-text-lightblue fs-6 font-roboto margin-bot-user display-flex align-center'>{`${comment.username} - ${formattedDate} - `}
-                  <StarRating rating={comment.ratingValue} />
+                    <StarRating rating={comment.ratingValue} starSize='half-star-container-rating'/>
                   </h1>
                   <hr className='spacer-line'/>
                   <p className='font-very-small font-inter margin-top-user'>  {comment.content}</p>
@@ -262,7 +262,7 @@ export default class Details extends React.Component {
           <Form onSubmit={this.handleSubmit} className={revealedForm}>
             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
               <div className='mb-1'>
-              <StarRating rating={this.state.rating} onClick={this.handleClickStar} />
+              <StarRating rating={this.state.rating} starSize='half-star-container-rating' onClick={this.handleClickStar} />
               </div>
               <Form.Control onChange={this.handleChange} value={this.state.comment} as="textarea" rows={3} />
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >SUBMIT</button>

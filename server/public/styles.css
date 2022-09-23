@@ -227,3 +227,18 @@ body {
   background-color: #021920;
   color: #8d979a;
 }
+
+.half-stars {
+  width: 0.75rem;
+  overflow: hidden;
+}
+
+.half-star-container-heading {
+  width: 0.85rem;
+  overflow: hidden;
+}
+
+.half-star-container-rating {
+  width: 0.55rem;
+  overflow: hidden;
+}

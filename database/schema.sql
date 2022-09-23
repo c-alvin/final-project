@@ -12,7 +12,7 @@ CREATE TABLE "public"."reviews" (
 	"content" TEXT NOT NULL,
 	"gameId" int NOT NULL,
   "createdAt" timestamp with time zone NOT NULL default now(),
-	"ratingValue" int,
+	"ratingValue" float4,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("commentId")
 ) WITH (
   OIDS=FALSE
