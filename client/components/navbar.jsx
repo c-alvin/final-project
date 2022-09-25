@@ -42,7 +42,9 @@ export default class NavbarComp extends React.Component {
     return (
       <Navbar fixed="top" className="color-blue" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand className="color-lightblue font-size-large" href="#">mist</Navbar.Brand>
+          <Navbar.Brand className="color-lightblue font-size-large" href="#">
+            {/* <img className='brand-image' src="./images/cloud.svg" alt="mist" /> */}
+            mistFuze</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {user !== null &&
