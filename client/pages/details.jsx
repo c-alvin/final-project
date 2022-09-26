@@ -37,10 +37,11 @@ export default class Details extends React.Component {
     fetch(`/api/details?gameId=${gameId}`)
       .then(res => res.json())
       .then(gameInfo => {
-        let { image_id: screenshotId } = gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 1) + 0];
-        screenshotId = `${screenshotId}.jpg`;
+        const screenshot = !gameInfo[0][0].screenshots
+          ? 'undefined.jpg'
+          : `${gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 1) + 0].image_id}.jpg`;
         this.setState({
-          backgroundImage: screenshotId,
+          backgroundImage: screenshot,
           avgRating: gameInfo[2][0],
           gameInfo: gameInfo[0],
           comments: gameInfo[1]
@@ -194,11 +195,15 @@ export default class Details extends React.Component {
     const modalView = this.state.videoModal === null
       ? 'hidden'
       : 'modal-background';
+
+    const cover = !this.state.gameInfo[0].cover
+      ? 'https://images.igdb.com/igdb/image/upload/t_cover_small_2x/undefined.jpg'
+      : `https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`;
     return (
     <div className='container'>
       <div style={{ backgroundImage: `url(https://images.igdb.com/igdb/image/upload/t_screenshot_huge/${this.state.backgroundImage})`, backgroundRepeat: 'no-repeat' }} className='row min-height-background-image background-size'>
         <div className='col-12 col-md-6 position-rel'>
-          <img src={`https://images.igdb.com/igdb/image/upload/t_cover_small_2x/${this.state.gameInfo[0].cover.image_id}.jpg`} id="game-logo"></img>
+          <img src={cover} id="game-logo"></img>
           <Badge id="rating" bg="info">{rating}</Badge>
           <div className='star-position'>
             {this.state.avgRating !== undefined
