@@ -107,6 +107,7 @@ export default class Details extends React.Component {
         const average = (this.state.avgRating)
           ? Number(this.state.avgRating.avg)
           : 0;
+
         const newAvg = {};
         newAvg.avg = ((average * (this.state.comments.length)) + result[0].ratingValue) / (this.state.comments.length + 1);
         this.setState({
@@ -273,7 +274,6 @@ export default class Details extends React.Component {
               <button type="submit" id="button-white" className="btn btn-info float-end margin-top-small" >SUBMIT</button>
             </Form.Group>
           </Form>
-            {/* <Pagination handleNextPage={this.handleNextPage} handlePrevPage={this.handlePrevPage} totalList={this.state.comments} currentPage={this.state.commentPage} handlePage={this.handlePage} /> */}
         </div>
       </div>
       <div className={modalView} onClick={this.handleClickBackground}>
