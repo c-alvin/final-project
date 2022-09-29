@@ -1,13 +1,14 @@
 import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
+// import Carousel from 'react-bootstrap/Carousel';
 
 export default function HelloWorld(props) {
   return (
-      <Carousel>
-        <Carousel.Item interval={1000}>
+    <div className='test background'>
+      {/* <Carousel>
+        <Carousel.Item className='' interval={1000}>
           <img
             className="d-block w-100"
-          src="https://wallpaperaccess.com/full/1821333.jpg"
+              src="https://wallpaperaccess.com/full/1821333.jpg"
             alt="First slide"
           />
           <Carousel.Caption />
@@ -28,6 +29,7 @@ export default function HelloWorld(props) {
           />
           <Carousel.Caption />
         </Carousel.Item>
-      </Carousel>
+      </Carousel> */}
+    </div>
   );
 }

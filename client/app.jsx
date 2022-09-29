@@ -116,6 +116,7 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isAuthorizing) return null;
+
     return (
     <>
     <NavbarComp handleSignOut={this.handleSignOut} user={this.state.user} />

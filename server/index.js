@@ -61,8 +61,8 @@ app.get('/api/details', (req, res, next) => {
   })
     .then(res => res.json());
 
-  Promise.all([detailsPromise, commentsPromise, ratingsPromise]).then(bothResults => {
-    res.status(200).json(bothResults);
+  Promise.all([detailsPromise, commentsPromise, ratingsPromise]).then(threeResults => {
+    res.status(200).json(threeResults);
   })
     .catch(err => next(err));
 });
