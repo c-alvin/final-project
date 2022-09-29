@@ -364,5 +364,13 @@ i.delete-icon {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.comment-pointer {
+  cursor: pointer;
+}
+
+.text-align-center {
+  text-align: center;
 }

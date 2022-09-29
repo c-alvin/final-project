@@ -196,7 +196,7 @@ export default class Details extends React.Component {
 
     const commentButton = !this.props.user
       ? 'hidden'
-      : 'fa-solid fa-plus';
+      : 'fa-solid fa-plus comment-pointer';
 
     const modalView = this.state.videoModal === null
       ? 'hidden'

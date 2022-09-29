@@ -9,12 +9,20 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTestAccount = this.handleTestAccount.bind(this);
   }
 
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({
       [name]: value
+    });
+  }
+
+  handleTestAccount() {
+    this.setState({
+      username: 'test123',
+      password: '123'
     });
   }
 
@@ -41,6 +49,9 @@ export default class AuthForm extends React.Component {
 
   render() {
     const { action } = this.props;
+    const testButton = action === 'sign-up'
+      ? 'btn btn-primary hidden'
+      : 'btn btn-primary';
     const alternateActionHref = action === 'sign-up'
       ? '#sign-in'
       : '#sign-up';
@@ -62,6 +73,7 @@ export default class AuthForm extends React.Component {
             id="username"
             type="text"
             name="username"
+            value={this.state.username}
             onChange={this.handleChange}
             className="form-control bg-light" />
         </div>
@@ -75,6 +87,7 @@ export default class AuthForm extends React.Component {
             type="password"
             name="password"
             onChange={this.handleChange}
+            value={this.state.password}
             className="form-control bg-light" />
         </div>
         <div className="d-flex justify-content-between align-items-center">
@@ -86,6 +99,11 @@ export default class AuthForm extends React.Component {
           <button type="submit" className="btn btn-primary">
             {submitButtonText}
           </button>
+        </div>
+        <div className='text-align-center'>
+        <button type="button" onClick={this.handleTestAccount} className={testButton}>
+          Test Profile
+        </button>
         </div>
       </form>
     );
