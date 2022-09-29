@@ -7,6 +7,7 @@ import Search from './pages/search';
 import Details from './pages/details';
 import Auth from './pages/auth';
 import jwtDecode from 'jwt-decode';
+import LoadingSpinner from './components/loading-spinner';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class App extends React.Component {
       currentPage: 1,
       postsPerPage: 7,
       user: null,
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      isLoading: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -25,6 +27,7 @@ export default class App extends React.Component {
     this.handlePage = this.handlePage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
+    this.setLoading = this.setLoading.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +57,12 @@ export default class App extends React.Component {
         currentPage: this.state.currentPage - 1
       });
     }
+  }
+
+  setLoading(value) {
+    this.setState({
+      isLoading: value
+    });
   }
 
   handleNextPage() {
@@ -100,6 +109,7 @@ export default class App extends React.Component {
     const { currentPage } = this.state;
     const { handlePrevPage } = this;
     const { handleNextPage } = this;
+    const { setLoading } = this;
     if (route.path === '') {
       return <Home user={user}/>;
     }
@@ -107,10 +117,10 @@ export default class App extends React.Component {
       return <Auth route={route} user={user} signIn={handleSignIn} />;
     }
     if (route.path === 'search') {
-      return <Search handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
+      return <Search setLoading={setLoading} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
     if (route.path === 'details') {
-      return <Details user={user} details={handleDetails} gameId={gameId} />;
+      return <Details setLoading={setLoading} user={user} details={handleDetails} gameId={gameId} />;
     }
   }
 
@@ -119,7 +129,11 @@ export default class App extends React.Component {
 
     return (
     <>
-    <NavbarComp handleSignOut={this.handleSignOut} user={this.state.user} />
+    <NavbarComp setLoading={this.setLoading} handleSignOut={this.handleSignOut} user={this.state.user} />
+    {this.state.isLoading
+      ? <LoadingSpinner view='show' />
+      : <LoadingSpinner view='hidden' />
+    }
     <PageContainer>
       { this.renderPage() }
     </PageContainer>

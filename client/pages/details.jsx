@@ -34,6 +34,7 @@ export default class Details extends React.Component {
 
   componentDidMount() {
     const gameId = this.props.gameId;
+    this.props.setLoading(true);
     fetch(`/api/details?gameId=${gameId}`)
       .then(res => res.json())
       .then(gameInfo => {
@@ -46,7 +47,9 @@ export default class Details extends React.Component {
           gameInfo: gameInfo[0],
           comments: gameInfo[1]
         });
+        this.props.setLoading(false);
       });
+
   }
 
   handlePage(num) {
@@ -96,6 +99,7 @@ export default class Details extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
+    this.props.setLoading(true);
     fetch('/api/details/comment', req)
       .then(res => res.json())
       .then(result => {
@@ -117,6 +121,7 @@ export default class Details extends React.Component {
           rating: undefined,
           avgRating: newAvg
         });
+        this.props.setLoading(false);
       })
     ;
   }

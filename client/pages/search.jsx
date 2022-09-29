@@ -22,20 +22,23 @@ export default class Search extends React.Component {
 
   componentDidMount() {
     const searchTerm = this.state.search;
+    this.props.setLoading(true);
     fetch(`/api/search?term=${searchTerm}`)
       .then(res => res.json())
       .then(result => {
         this.props.search(result);
+        this.props.setLoading(false);
       });
-
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.searchTerm !== prevProps.searchTerm) {
+      this.props.setLoading(true);
       fetch(`/api/search?term=${this.props.searchTerm}`)
         .then(res => res.json())
         .then(result => {
           this.props.search(result);
+          this.props.setLoading(false);
         });
     }
   }
