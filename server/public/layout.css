@@ -1,6 +1,6 @@
 .background-size {
   height: 375px;
-  width: auto;
+  width: 350px;
   background-size: cover;
 }
 
@@ -12,7 +12,7 @@
 
 .video-img {
   height: 10rem;
-  width: 10rem;
+  width: 9.75rem;
   object-fit: fill;
 }
 
@@ -25,14 +25,6 @@
   border-radius: 4px;
   height: 200px;
   width: 350px;
-}
-
-.error-modal {
-  background-color: #04252e;
-  height: 200px;
-  width: 350px;
-  border: solid black 0.5rem;
-  border-radius: 0.2rem;
 }
 
 @media screen and (min-width: 400px) {
@@ -56,13 +48,6 @@
     background-color: white;
     border-radius: 4px;
     height: 300px;
-    width: 500px;
-  }
-
-  .error-modal {
-    background-color: #04252e;
-    border-radius: 4px;
-    height: 200px;
     width: 500px;
   }
 }

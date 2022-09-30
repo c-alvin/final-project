@@ -80,11 +80,8 @@ export default class App extends React.Component {
   }
 
   errorModal(errMessage) {
-    if (!errMessage) {
-      errMessage = null;
-    }
     this.setState({
-      errorModal: errMessage
+      errorModal: errMessage.message
     });
   }
 
@@ -154,7 +151,7 @@ export default class App extends React.Component {
     </PageContainer>
     <div className={errorModalView}>
       <div className='display-flex justify-center error-modal flex-direction-column align-center'>
-        <h1 className='color-text-white font-roboto'>{this.state.errorModal}</h1>
+        <h1 className='color-text-white font-roboto text-align-center font-small-error'>{this.state.errorModal}</h1>
         <button className='error-button' onClick={this.errorModal}>Close</button>
       </div>
     </div>

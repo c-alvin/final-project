@@ -72,6 +72,7 @@ img {
   position: relative;
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.5);
   border: #18464b solid 0.2rem;
+  border-radius: 1rem;
 }
 
 #game-logo {
@@ -139,7 +140,7 @@ body {
 }
 
 .font-very-small {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
 }
 
 .margin-top-user {
@@ -278,7 +279,7 @@ i.delete-icon {
   height: 7px;
   border-radius: 50%;
   background: #fff;
-  margin: -4px 0 0 -4px;
+  margin: -0.25rem 0 0 -0.25rem;
 }
 
 .lds-roller div:nth-child(1) {
@@ -375,10 +376,6 @@ i.delete-icon {
   text-align: center;
 }
 
-#search-bar {
-  width: 25rem;
-}
-
 .flex-direction-column {
   flex-direction: column;
 }
@@ -387,4 +384,16 @@ i.delete-icon {
   background-color: red;
   color: black;
   border: solid black 0.1rem;
+}
+
+.font-small-error {
+  font-size: 2rem;
+}
+
+.border-shadow {
+  border-left: black solid 0.5rem;
+  border-radius: 1rem;
+  border-top: solid black 0.5rem;
+  border-bottom: solid 0.2rem black;
+  box-shadow: -7px 10px rgba(0, 0, 0, 0.6);
 }

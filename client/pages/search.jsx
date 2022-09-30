@@ -103,7 +103,6 @@ export default class Search extends React.Component {
                   <h5 className='color-text-white font-lig'>No games were found, please search again!</h5>
                 </div>
             }
-
           </div>
           <Pagination handleNextPage={this.props.handleNextPage} handlePrevPage = {this.props.handlePrevPage} totalList = {this.props.totalList} currentPage={this.props.currentPage} handlePage={this.props.handlePage} />
         </div>

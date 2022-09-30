@@ -233,7 +233,7 @@ export default class Details extends React.Component {
         </div>
       </div>
       <div className='row'>
-        <div className='color-text-white col-md-6 font-lig'>
+        <div className='color-text-white col-md-6 font-lig border-shadow'>
           <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>Summary</h1>
           <p className='font-inter'>{description}</p>
           { this.state.gameInfo[0].genres &&
@@ -258,7 +258,7 @@ export default class Details extends React.Component {
             )
           }
         </div>
-        <div className='color-text-white col-md-6 font-lig'>
+        <div className='color-text-white col-md-6 font-lig border-shadow'>
           <div className='display-flex space-between align-center'>
             <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>{`Reviews(${this.state.comments.length})`}</h1>
             <i onClick={this.handleClick} className={commentButton}></i>
