@@ -24,22 +24,36 @@ export default class Search extends React.Component {
     const searchTerm = this.state.search;
     this.props.setLoading(true);
     fetch(`/api/search?term=${searchTerm}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         this.props.search(result);
         this.props.setLoading(false);
-      });
+      })
+      .catch(err => this.props.errorModal(err));
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.searchTerm !== prevProps.searchTerm) {
       this.props.setLoading(true);
       fetch(`/api/search?term=${this.props.searchTerm}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Sorry a network error occured');
+          } else {
+            return res.json();
+          }
+        })
         .then(result => {
           this.props.search(result);
           this.props.setLoading(false);
-        });
+        })
+        .catch(err => this.props.errorModal(err));
     }
   }
 

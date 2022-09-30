@@ -23,6 +23,7 @@ export default class AuthPage extends React.Component {
               key={this.props.route.path}
               action={this.props.route.path}
               onSignIn={this.props.signIn}
+              errorModal={this.props.errorModal}
               />
           </div>
         </div>

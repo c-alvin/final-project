@@ -374,3 +374,17 @@ i.delete-icon {
 .text-align-center {
   text-align: center;
 }
+
+#search-bar {
+  width: 25rem;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+.error-button {
+  background-color: red;
+  color: black;
+  border: solid black 0.1rem;
+}

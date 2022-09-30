@@ -37,14 +37,21 @@ export default class AuthForm extends React.Component {
       body: JSON.stringify(this.state)
     };
     fetch(`/api/auth/${action}`, req)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
           this.props.onSignIn(result);
         }
-      });
+      })
+      .catch(err => this.props.errorModal(err));
   }
 
   render() {

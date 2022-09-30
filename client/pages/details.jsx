@@ -36,7 +36,13 @@ export default class Details extends React.Component {
     const gameId = this.props.gameId;
     this.props.setLoading(true);
     fetch(`/api/details?gameId=${gameId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(gameInfo => {
         const screenshot = !gameInfo[0][0].screenshots
           ? 'undefined.jpg'
@@ -48,7 +54,8 @@ export default class Details extends React.Component {
           comments: gameInfo[1]
         });
         this.props.setLoading(false);
-      });
+      })
+      .catch(err => this.props.errorModal(err));
 
   }
 
@@ -101,7 +108,13 @@ export default class Details extends React.Component {
     };
     this.props.setLoading(true);
     fetch('/api/details/comment', req)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         const slicedComments = this.state.comments.slice();
         slicedComments.push(result[0]);
@@ -123,7 +136,7 @@ export default class Details extends React.Component {
         });
         this.props.setLoading(false);
       })
-    ;
+      .catch(err => this.props.errorModal(err));
   }
 
   handleClick(event) {
@@ -186,7 +199,6 @@ export default class Details extends React.Component {
     } else {
       rating = 'N/A';
     }
-
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
@@ -224,7 +236,7 @@ export default class Details extends React.Component {
         <div className='color-text-white col-md-6 font-lig'>
           <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>Summary</h1>
           <p className='font-inter'>{description}</p>
-          {
+          { this.state.gameInfo[0].genres &&
             this.state.gameInfo[0].genres.map((genre, index) => {
               return (
                 <div key={index}>

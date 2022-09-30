@@ -26,10 +26,17 @@ export default class NavbarComp extends React.Component {
     event.preventDefault();
     const searchTerm = this.state.search;
     fetch(`/api/search?term=${searchTerm}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         this.props.search(result);
-      });
+      })
+      .catch(err => this.props.errorModal(err));
   }
 
   handleSubmitTest(event) {
@@ -44,7 +51,7 @@ export default class NavbarComp extends React.Component {
         <Container>
           <Navbar.Brand className="color-lightblue font-size-large" href="#">
             {/* <img className='brand-image' src="./images/cloud.svg" alt="mist" /> */}
-            mistFuze</Navbar.Brand>
+            mist</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {user !== null &&
