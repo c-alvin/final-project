@@ -388,3 +388,7 @@ i.delete-icon {
   color: black;
   border: solid black 0.1rem;
 }
+
+.font-small {
+  font-size: 2rem;
+}
