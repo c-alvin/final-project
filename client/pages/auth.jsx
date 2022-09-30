@@ -22,7 +22,8 @@ export default class AuthPage extends React.Component {
             <AuthForm
               key={this.props.route.path}
               action={this.props.route.path}
-              onSignIn={this.props.signIn}/>
+              onSignIn={this.props.signIn}
+              />
           </div>
         </div>
       </div>

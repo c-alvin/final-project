@@ -66,7 +66,7 @@ export default class NavbarComp extends React.Component {
             <Form className="d-flex" onSubmit= {this.handleSubmitTest}>
               <Form.Control onChange={this.handleChange}
                 type="search"
-                placeholder="Search"
+                placeholder="Search for a game"
                 className="me-2"
                 aria-label="Search"
               />
