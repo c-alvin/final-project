@@ -278,7 +278,7 @@ i.delete-icon {
   height: 7px;
   border-radius: 50%;
   background: #fff;
-  margin: -4px 0 0 -4px;
+  margin: -0.25rem 0 0 -0.25rem;
 }
 
 .lds-roller div:nth-child(1) {
@@ -375,10 +375,6 @@ i.delete-icon {
   text-align: center;
 }
 
-#search-bar {
-  width: 25rem;
-}
-
 .flex-direction-column {
   flex-direction: column;
 }
@@ -389,6 +385,6 @@ i.delete-icon {
   border: solid black 0.1rem;
 }
 
-.font-small {
+.font-small-error {
   font-size: 2rem;
 }
