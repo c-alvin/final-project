@@ -34,19 +34,29 @@ export default class Details extends React.Component {
 
   componentDidMount() {
     const gameId = this.props.gameId;
+    this.props.setLoading(true);
     fetch(`/api/details?gameId=${gameId}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(gameInfo => {
         const screenshot = !gameInfo[0][0].screenshots
           ? 'undefined.jpg'
-          : `${gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 1) + 0].image_id}.jpg`;
+          : `${gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 0)].image_id}.jpg`;
         this.setState({
           backgroundImage: screenshot,
           avgRating: gameInfo[2][0],
           gameInfo: gameInfo[0],
           comments: gameInfo[1]
         });
-      });
+        this.props.setLoading(false);
+      })
+      .catch(err => this.props.errorModal(err));
+
   }
 
   handlePage(num) {
@@ -96,8 +106,15 @@ export default class Details extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
+    this.props.setLoading(true);
     fetch('/api/details/comment', req)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         const slicedComments = this.state.comments.slice();
         slicedComments.push(result[0]);
@@ -117,8 +134,9 @@ export default class Details extends React.Component {
           rating: undefined,
           avgRating: newAvg
         });
+        this.props.setLoading(false);
       })
-    ;
+      .catch(err => this.props.errorModal(err));
   }
 
   handleClick(event) {
@@ -181,7 +199,6 @@ export default class Details extends React.Component {
     } else {
       rating = 'N/A';
     }
-
     let dateTest = new Date(this.state.gameInfo[0].first_release_date * 1000);
     dateTest = dateTest.getFullYear();
 
@@ -191,7 +208,7 @@ export default class Details extends React.Component {
 
     const commentButton = !this.props.user
       ? 'hidden'
-      : 'fa-solid fa-plus';
+      : 'fa-solid fa-plus comment-pointer';
 
     const modalView = this.state.videoModal === null
       ? 'hidden'
@@ -219,7 +236,7 @@ export default class Details extends React.Component {
         <div className='color-text-white col-md-6 font-lig'>
           <h1 className='color-text-lightblue margin-top-small font-lig font-size-large'>Summary</h1>
           <p className='font-inter'>{description}</p>
-          {
+          { this.state.gameInfo[0].genres &&
             this.state.gameInfo[0].genres.map((genre, index) => {
               return (
                 <div key={index}>

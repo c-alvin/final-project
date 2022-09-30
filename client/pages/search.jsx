@@ -22,21 +22,38 @@ export default class Search extends React.Component {
 
   componentDidMount() {
     const searchTerm = this.state.search;
+    this.props.setLoading(true);
     fetch(`/api/search?term=${searchTerm}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Sorry a network error occured');
+        } else {
+          return res.json();
+        }
+      })
       .then(result => {
         this.props.search(result);
-      });
-
+        this.props.setLoading(false);
+      })
+      .catch(err => this.props.errorModal(err));
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.searchTerm !== prevProps.searchTerm) {
+      this.props.setLoading(true);
       fetch(`/api/search?term=${this.props.searchTerm}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Sorry a network error occured');
+          } else {
+            return res.json();
+          }
+        })
         .then(result => {
           this.props.search(result);
-        });
+          this.props.setLoading(false);
+        })
+        .catch(err => this.props.errorModal(err));
     }
   }
 
@@ -52,8 +69,8 @@ export default class Search extends React.Component {
         </div>
         <div className="row">
           <div className="col">
-            {
-              this.props.listOfGames.map(game => {
+            { this.props.listOfGames.length > 0
+              ? this.props.listOfGames.map(game => {
                 let dateTest = new Date(game.first_release_date * 1000);
                 dateTest = dateTest.getFullYear();
                 return (
@@ -82,7 +99,11 @@ export default class Search extends React.Component {
                 );
               }
               )
+              : <div className=' row'>
+                  <h5 className='color-text-white font-lig'>No games were found, please search again!</h5>
+                </div>
             }
+
           </div>
           <Pagination handleNextPage={this.props.handleNextPage} handlePrevPage = {this.props.handlePrevPage} totalList = {this.props.totalList} currentPage={this.props.currentPage} handlePage={this.props.handlePage} />
         </div>

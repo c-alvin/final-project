@@ -7,6 +7,7 @@ import Search from './pages/search';
 import Details from './pages/details';
 import Auth from './pages/auth';
 import jwtDecode from 'jwt-decode';
+import LoadingSpinner from './components/loading-spinner';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,9 @@ export default class App extends React.Component {
       currentPage: 1,
       postsPerPage: 7,
       user: null,
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      isLoading: false,
+      errorModal: false
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -25,6 +28,8 @@ export default class App extends React.Component {
     this.handlePage = this.handlePage.bind(this);
     this.handlePrevPage = this.handlePrevPage.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
+    this.setLoading = this.setLoading.bind(this);
+    this.errorModal = this.errorModal.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +61,12 @@ export default class App extends React.Component {
     }
   }
 
+  setLoading(value) {
+    this.setState({
+      isLoading: value
+    });
+  }
+
   handleNextPage() {
     if (this.state.currentPage === Math.ceil(this.state.listOfGames.length / 7)) {
       this.setState({
@@ -66,6 +77,15 @@ export default class App extends React.Component {
         currentPage: this.state.currentPage + 1
       });
     }
+  }
+
+  errorModal(errMessage) {
+    if (!errMessage) {
+      errMessage = null;
+    }
+    this.setState({
+      errorModal: errMessage
+    });
   }
 
   handleSignIn(result) {
@@ -100,29 +120,44 @@ export default class App extends React.Component {
     const { currentPage } = this.state;
     const { handlePrevPage } = this;
     const { handleNextPage } = this;
+    const { setLoading } = this;
+    const { errorModal } = this;
     if (route.path === '') {
       return <Home user={user}/>;
     }
     if (route.path === 'sign-up' || route.path === 'sign-in') {
-      return <Auth route={route} user={user} signIn={handleSignIn} />;
+      return <Auth errorModal={errorModal} route={route} user={user} signIn={handleSignIn} />;
     }
     if (route.path === 'search') {
-      return <Search handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
+      return <Search errorModal={errorModal} setLoading={setLoading} handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} totalList= {listOfGames} currentPage={currentPage} handlePage={handlePage} listOfGames={currentListOfGames} searchTerm={searchTerm} search={handleSearch}/>;
     }
     if (route.path === 'details') {
-      return <Details user={user} details={handleDetails} gameId={gameId} />;
+      return <Details errorModal={errorModal} setLoading={setLoading} user={user} details={handleDetails} gameId={gameId} />;
     }
   }
 
   render() {
     if (this.state.isAuthorizing) return null;
+    const errorModalView = this.state.errorModal
+      ? 'modal-background'
+      : 'modal-background hidden';
 
     return (
     <>
-    <NavbarComp handleSignOut={this.handleSignOut} user={this.state.user} />
+    <NavbarComp errorModal={this.errorModal} setLoading={this.setLoading} handleSignOut={this.handleSignOut} user={this.state.user} />
+    {this.state.isLoading
+      ? <LoadingSpinner view='show' />
+      : <LoadingSpinner view='hidden' />
+    }
     <PageContainer>
       { this.renderPage() }
     </PageContainer>
+    <div className={errorModalView}>
+      <div className='display-flex justify-center error-modal flex-direction-column align-center'>
+        <h1 className='color-text-white font-roboto'>{this.state.errorModal}</h1>
+        <button className='error-button' onClick={this.errorModal}>Close</button>
+      </div>
+    </div>
     </>
     );
   }
