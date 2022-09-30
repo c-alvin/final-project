@@ -389,3 +389,11 @@ i.delete-icon {
 .font-small-error {
   font-size: 2rem;
 }
+
+.border-shadow {
+  border-left: black solid 0.5rem;
+  border-radius: 1rem;
+  border-top: solid black 0.5rem;
+  border-bottom: solid 0.2rem black;
+  box-shadow: -7px 10px rgba(0, 0, 0, 0.6);
+}
