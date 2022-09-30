@@ -40,7 +40,7 @@ export default class Details extends React.Component {
       .then(gameInfo => {
         const screenshot = !gameInfo[0][0].screenshots
           ? 'undefined.jpg'
-          : `${gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 1) + 0].image_id}.jpg`;
+          : `${gameInfo[0][0].screenshots[Math.floor(Math.random() * ((gameInfo[0][0].screenshots.length - 1) - 0) + 0)].image_id}.jpg`;
         this.setState({
           backgroundImage: screenshot,
           avgRating: gameInfo[2][0],
