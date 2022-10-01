@@ -84,7 +84,7 @@ Leave a review
 
 1. Update the `TOKEN_SECRET` with any value, Acquire/Update `CLIENT_SECRET`, `CLIENT_ID`, `API_TOKEN` by following the instructions at [igdb](https://api-docs.igdb.com/#account-creation)
 
-1. Start the project. Once started you can view the application by opening http://localhost:3000 in your browser.
+1. Start PostgreSQL and create the database
 
     ```shell
     sudo service postgresql start
