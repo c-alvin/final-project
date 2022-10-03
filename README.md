@@ -66,8 +66,8 @@ Leave a review
 1. Clone the repository.
 
     ```shell
-    git clone git@github.com:c-alvin/final-project.git
-    cd final-project
+    git clone git@github.com:c-alvin/mist.git
+    cd mist
     ```
 
 1. Install all dependencies with NPM.
