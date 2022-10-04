@@ -54,9 +54,11 @@ export default class NavbarComp extends React.Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             {user !== null &&
+              <a href='#sign-in'>
               <button className="button-no-style" onClick={this.props.handleSignOut} >
                 Sign out
               </button>
+              </a>
             }
             { user === null &&
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
